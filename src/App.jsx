@@ -26,6 +26,8 @@ import {
   RefreshCw,
   ShieldCheck,
   Sparkles,
+  Target,
+  UserRound,
   X
 } from "lucide-react";
 
@@ -67,7 +69,29 @@ const platformTabs = [
   { id: "package", label: "Package", icon: Archive }
 ];
 
-const navItems = ["WxMD", "CardMD", "Studio Desk", "Skill Center", "API"];
+const navItems = [
+  { label: "Studio Desk", path: "/studio" },
+  { label: "Founder IP", path: "/founder" },
+  { label: "WxMD", path: "/wxmd" },
+  { label: "CardMD", path: "/cardmd" },
+  { label: "Skills", path: "/skills" },
+  { label: "API", path: "/api" }
+];
+
+const basePath = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
+
+function routePath(path) {
+  if (!basePath) return path;
+  return `${basePath}${path}`;
+}
+
+function currentRoute() {
+  const pathname = window.location.pathname;
+  if (basePath && pathname.startsWith(basePath)) {
+    return pathname.slice(basePath.length) || "/";
+  }
+  return pathname;
+}
 
 const md2wechatSignals = [
   "Credentialed draft APIs stay behind server-side gates.",
@@ -221,6 +245,16 @@ function statusLabel(status) {
 }
 
 function App() {
+  const route = currentRoute();
+
+  if (route === "/founder" || route === "/about") {
+    return <FounderPage />;
+  }
+
+  return <StudioApp />;
+}
+
+function StudioApp() {
   const [markdown, setMarkdown] = useState(initialMarkdown);
   const [activeTab, setActiveTab] = useState("wechat");
   const [checklist, setChecklist] = useState(createChecklist);
@@ -283,12 +317,12 @@ function App() {
 
   return (
     <div className="studio-shell">
-      <Header packageStatus={packageStatus} />
+      <Header packageStatus={packageStatus} current="Studio Desk" />
       <main className="studio-main" aria-label="AI PickGold Studio Desk">
         <section className="workspace-title">
           <div>
-            <p className="muted small">/studio</p>
-            <h1>One Markdown, multi-platform publish package</h1>
+            <p className="muted small">/studio · V2 direction</p>
+            <h1>Turn a creator draft into a reviewed business asset</h1>
           </div>
           <div className="workspace-actions">
             <button className="icon-button" aria-label="Refresh package">
@@ -299,6 +333,29 @@ function App() {
               {exporting ? "Exporting..." : "Export Package"}
             </button>
           </div>
+        </section>
+
+        <section className="strategy-strip" aria-label="Studio strategy">
+          <StrategyCard
+            icon={UserRound}
+            label="User"
+            text="For creators who already have a draft, but need platform-native output without starting over."
+          />
+          <StrategyCard
+            icon={Target}
+            label="Job"
+            text="Move from raw Markdown to WeChat, Xiaohongshu, X, video, and a checked handoff package."
+          />
+          <StrategyCard
+            icon={PackageCheck}
+            label="Business"
+            text="Free proves utility; Studio sells package history, API workflows, and custom setup."
+          />
+          <StrategyCard
+            icon={ShieldCheck}
+            label="Trust"
+            text="Account publishing remains gated. Users review, export, then publish manually."
+          />
         </section>
 
         <section className="desk-grid">
@@ -335,7 +392,7 @@ function App() {
   );
 }
 
-function Header({ packageStatus }) {
+function Header({ packageStatus = "ready", current = "Studio Desk" }) {
   return (
     <header className="topbar">
       <div className="brand-lockup">
@@ -348,11 +405,11 @@ function Header({ packageStatus }) {
       <nav className="product-switcher" aria-label="Product switcher">
         {navItems.map((item) => (
           <a
-            key={item}
-            className={item === "Studio Desk" ? "active" : ""}
-            href={item === "Studio Desk" ? "/studio" : `/${item.toLowerCase().replaceAll(" ", "-")}`}
+            key={item.label}
+            className={item.label === current ? "active" : ""}
+            href={routePath(item.path)}
           >
-            {item}
+            {item.label}
           </a>
         ))}
       </nav>
@@ -369,6 +426,109 @@ function Header({ packageStatus }) {
         <span className="package-state">{packageStatus}</span>
       </div>
     </header>
+  );
+}
+
+function StrategyCard({ icon: Icon, label, text }) {
+  return (
+    <article className="strategy-card">
+      <span>
+        <Icon size={15} />
+      </span>
+      <div>
+        <strong>{label}</strong>
+        <p>{text}</p>
+      </div>
+    </article>
+  );
+}
+
+function FounderPage() {
+  return (
+    <div className="studio-shell founder-shell">
+      <Header packageStatus="founder IP" current="Founder IP" />
+      <main className="founder-page" aria-label="Founder IP profile">
+        <section className="founder-hero">
+          <div className="founder-copy">
+            <p className="muted small">High Soar · AI workflow operator</p>
+            <h1>
+              我把 AI 工作流产品化：
+              <br />
+              可复用、可审查、
+              <br />
+              可交付、可变现。
+            </h1>
+            <p>
+              AI PickGold Studio 不是展示 AI 魔法，而是把内容生产、风险审查、多平台分发和商业化包装变成一套可运营的工作台。
+            </p>
+            <div className="founder-actions">
+              <a className="primary-action" href={routePath("/studio")}>
+                <LayoutPanelLeft size={16} />
+                Open Studio Desk
+              </a>
+              <a className="secondary-link" href="https://github.com/soarsky1991/aipickgold-studio">
+                <Globe2 size={16} />
+                GitHub project
+              </a>
+            </div>
+          </div>
+
+          <aside className="founder-proof">
+            <div>
+              <span>Positioning</span>
+              <strong>AI 内容工作流产品化顾问</strong>
+            </div>
+            <div>
+              <span>Proof assets</span>
+              <p>WxMD、CardMD、Studio package、md2wechat benchmark、Figma prototype、Linear delivery loop</p>
+            </div>
+            <div>
+              <span>Boundary</span>
+              <p>生成、审查、导出、交付；账号发布和密钥调用保持人工/服务端控制。</p>
+            </div>
+          </aside>
+        </section>
+
+        <section className="founder-grid">
+          <FounderBlock
+            title="我服务谁"
+            body="个人 IP、知识创作者、AI 工具创业者，以及需要把内容生产从临时发挥变成稳定流程的小团队。"
+          />
+          <FounderBlock
+            title="我解决什么"
+            body="从一篇草稿开始，拆成平台化输出、审查清单、导出包、复盘入口和后续 API/自动化能力。"
+          />
+          <FounderBlock
+            title="我怎么商业化"
+            body="免费工作台建立信任；高级版销售发布包历史、团队协作、API 托管、私有化配置和顾问式搭建。"
+          />
+          <FounderBlock
+            title="我为什么可信"
+            body="我把 brief、设计、工程、上线、Figma、Linear、竞品 API 测试和交付证据放在同一个可追踪闭环里。"
+          />
+        </section>
+
+        <section className="offer-band">
+          <div>
+            <p className="muted small">Current offer</p>
+            <h2>把你的内容流程做成一个可展示、可复用、可交付的 AI 工作台。</h2>
+          </div>
+          <a className="primary-action" href={routePath("/studio")}>
+            <PackageCheck size={16} />
+            See the product
+          </a>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+function FounderBlock({ title, body }) {
+  return (
+    <article className="founder-block">
+      <h2>{title}</h2>
+      <p>{body}</p>
+    </article>
   );
 }
 
