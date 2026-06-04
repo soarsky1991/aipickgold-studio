@@ -30,6 +30,20 @@ Turn one source draft into:
 - Paid upgrade: package history, API gateway, team review, private workflow configuration, and managed setup.
 - Founder IP conversion: the founder page sells the operator's ability to turn AI workflows into systems that are reusable, reviewable, deliverable, and monetizable.
 
+## Service Offers
+
+1. AI workflow audit
+   Audience: creators with scattered content operations.
+   Deliverable: workflow map, trust boundary, and 7-day implementation checklist.
+
+2. Content publishing workbench setup
+   Audience: personal IP operators, knowledge creators, and small teams.
+   Deliverable: source draft entry, platform outputs, review checklist, and export package.
+
+3. Advanced API implementation
+   Audience: teams that need md2wechat-style draft APIs, private keys, and collaboration.
+   Deliverable: server-side API boundary, credential isolation, and manual-publish gate.
+
 ## Trust Boundary
 
 The product must not imply unsafe account automation. V2 keeps final publishing manual by default. Credentialed account actions and md2wechat-style draft APIs stay gated behind server-side Pro/API paths.
@@ -39,6 +53,7 @@ The product must not imply unsafe account automation. V2 keeps final publishing 
 - GitHub Pages deployment from `main` `/docs`.
 - `/studio/` static route with V2 strategy strip: User, Job, Business, Trust.
 - `/founder/` static route for personal IP promotion.
+- Founder page commercial conversion layer with workflow audit, workbench setup, and API implementation offers.
 - Route normalization so `/studio`, `/studio/`, `/founder`, and `/founder/` resolve correctly.
 - Desktop and mobile QA for layout width, rendered titles, and active navigation.
 
@@ -81,6 +96,6 @@ Follow-up issues:
 
 - Add package history and saved runs.
 - Add server-side md2wechat draft API integration with secret storage.
-- Add lead capture/contact CTA to Founder IP page.
+- Replace GitHub issue CTA with a dedicated lead capture/contact form once a CRM or inbox target is chosen.
 - Add platform output quality controls and review presets.
 - Add onboarding sample drafts for creator, consultant, and small-team use cases.

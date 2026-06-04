@@ -509,15 +509,51 @@ function FounderPage() {
           />
         </section>
 
+        <section className="service-offers" aria-label="Founder service offers">
+          <div className="section-kicker">
+            <p className="muted small">Commercial paths</p>
+            <h2>从一次流程体检，到一个可上线的 AI 工作台。</h2>
+          </div>
+          <div className="offer-cards">
+            <FounderOffer
+              icon={ListChecks}
+              title="AI 工作流体检"
+              audience="适合已经在做内容，但流程分散、难复用的人。"
+              deliverable="交付流程地图、风险边界、7 天改造清单。"
+            />
+            <FounderOffer
+              icon={LayoutPanelLeft}
+              title="内容发布工作台搭建"
+              audience="适合个人 IP、知识创作者和小团队。"
+              deliverable="交付草稿入口、平台输出、审查清单、导出包。"
+            />
+            <FounderOffer
+              icon={KeyRound}
+              title="高级版 API 落地"
+              audience="适合要接入 md2wechat、私有密钥和团队协作的业务。"
+              deliverable="交付服务端调用边界、密钥隔离、人工发布门禁。"
+            />
+          </div>
+        </section>
+
         <section className="offer-band">
           <div>
             <p className="muted small">Current offer</p>
             <h2>把你的内容流程做成一个可展示、可复用、可交付的 AI 工作台。</h2>
           </div>
-          <a className="primary-action" href={routePath("/studio")}>
-            <PackageCheck size={16} />
-            See the product
-          </a>
+          <div className="offer-actions">
+            <a className="primary-action" href={routePath("/studio")}>
+              <PackageCheck size={16} />
+              See the product
+            </a>
+            <a
+              className="secondary-link"
+              href="https://github.com/soarsky1991/aipickgold-studio/issues/new?title=AI%20workflow%20audit%20request"
+            >
+              <MessageSquareText size={16} />
+              Start a brief
+            </a>
+          </div>
         </section>
       </main>
     </div>
@@ -529,6 +565,19 @@ function FounderBlock({ title, body }) {
     <article className="founder-block">
       <h2>{title}</h2>
       <p>{body}</p>
+    </article>
+  );
+}
+
+function FounderOffer({ icon: Icon, title, audience, deliverable }) {
+  return (
+    <article className="founder-offer">
+      <div className="offer-icon">
+        <Icon size={18} />
+      </div>
+      <h3>{title}</h3>
+      <p>{audience}</p>
+      <strong>{deliverable}</strong>
     </article>
   );
 }
