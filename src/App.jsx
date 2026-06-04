@@ -61,6 +61,79 @@ const initialMarkdown = `# 如何用一篇内容打造多平台影响力
 - 形成多平台变体并人工审核
 - 打包导出，手动发布`;
 
+const founderOfferMarkdown = `# 把 AI 工作流做成可交付产品
+
+> 个人 IP 不只展示能力，还要把能力包装成可购买的服务。
+
+## 核心主张
+- AI 工作流不是一堆提示词，而是一套可复用系统
+- 每个输出都应该有审查清单和交付边界
+- 免费样板建立信任，高级版承接 API、私有化和团队流程
+
+## 适合谁
+- 想把个人能力产品化的创作者
+- 正在搭建 AI 工具或内容工作台的小团队
+- 需要把交付流程从临时手工变成稳定系统的业务负责人
+
+## 服务路径
+| 服务 | 目标 | 交付 |
+| --- | --- | --- |
+| 工作流体检 | 找出流程断点 | 流程图 + 风险边界 + 改造清单 |
+| 工作台搭建 | 做出可用工具 | 草稿入口 + 平台输出 + 导出包 |
+| API 落地 | 支持高级集成 | 服务端调用 + 密钥隔离 + 人工门禁 |
+
+## 下一步
+- 选择一个真实内容流程
+- 明确要服务的用户和商业目标
+- 做出第一版可展示工作台
+- 用真实发布包验证价值`;
+
+const apiCaseMarkdown = `# md2wechat 高级接口怎么接进内容工作台
+
+> API 不是直接自动发布，而是把草稿生成能力放进安全边界里。
+
+## 业务目标
+- 让创作者从 Markdown 快速生成公众号草稿
+- 保持密钥、AppSecret 和 API Key 在服务端
+- 保留人工审查和手动发布门禁
+
+## 当前接口信号
+| 能力 | 价值 | 风险边界 |
+| --- | --- | --- |
+| article-draft | Markdown 转公众号草稿 | 需要白名单和密钥隔离 |
+| theme/fontSize | 样式标准化 | 不应该覆盖人工排版判断 |
+| coverImageUrl | 封面同步 | 需要图片版权和平台合规检查 |
+
+## 产品化建议
+- 前端只展示 API 状态和审查结果
+- 后端保存密钥并控制调用频率
+- 每次调用生成 package manifest
+- 发布动作保持人工确认`;
+
+const starterDrafts = [
+  {
+    id: "creator",
+    title: "创作者内容包",
+    promise: "一篇草稿改成多平台发布包。",
+    fileName: "multi_platform_playbook.md",
+    markdown: initialMarkdown
+  },
+  {
+    id: "founder",
+    title: "个人 IP offer",
+    promise: "把能力包装成可购买服务。",
+    fileName: "founder_offer_system.md",
+    markdown: founderOfferMarkdown
+  },
+  {
+    id: "api",
+    title: "高级 API 案例",
+    promise: "把 md2wechat 接入安全边界。",
+    fileName: "md2wechat_api_case.md",
+    markdown: apiCaseMarkdown
+  }
+];
+
 const platformTabs = [
   { id: "wechat", label: "WeChat", icon: MessageSquareText },
   { id: "xiaohongshu", label: "Xiaohongshu", icon: Image },
@@ -256,7 +329,8 @@ function App() {
 }
 
 function StudioApp() {
-  const [markdown, setMarkdown] = useState(initialMarkdown);
+  const [markdown, setMarkdown] = useState(starterDrafts[0].markdown);
+  const [selectedStarter, setSelectedStarter] = useState(starterDrafts[0].id);
   const [activeTab, setActiveTab] = useState("wechat");
   const [checklist, setChecklist] = useState(createChecklist);
   const [copied, setCopied] = useState("");
@@ -281,6 +355,16 @@ function StudioApp() {
     await navigator.clipboard.writeText(text);
     setCopied(key);
     window.setTimeout(() => setCopied(""), 1200);
+  }
+
+  function selectStarter(starterId) {
+    const starter = starterDrafts.find((item) => item.id === starterId);
+    if (!starter) return;
+    setSelectedStarter(starterId);
+    setMarkdown(starter.markdown);
+    setActiveTab("wechat");
+    setChecklist(createChecklist());
+    setLastExport(null);
   }
 
   async function exportPackage() {
@@ -360,7 +444,13 @@ function StudioApp() {
         </section>
 
         <section className="desk-grid">
-          <SourcePanel markdown={markdown} setMarkdown={setMarkdown} />
+          <SourcePanel
+            markdown={markdown}
+            setMarkdown={setMarkdown}
+            starterDrafts={starterDrafts}
+            selectedStarter={selectedStarter}
+            onSelectStarter={selectStarter}
+          />
           <OutputPanel
             activeTab={activeTab}
             setActiveTab={setActiveTab}
@@ -582,22 +672,42 @@ function FounderOffer({ icon: Icon, title, audience, deliverable }) {
   );
 }
 
-function SourcePanel({ markdown, setMarkdown }) {
+function SourcePanel({
+  markdown,
+  setMarkdown,
+  starterDrafts: starters,
+  selectedStarter,
+  onSelectStarter
+}) {
+  const currentStarter = starters.find((starter) => starter.id === selectedStarter) ?? starters[0];
+
   return (
     <article className="panel source-panel">
       <PanelHeading
         index="1"
-        title="Source Markdown"
+        title="Source Draft"
         icon={FileText}
         action={<button className="secondary-action">Stats</button>}
       />
       <div className="file-row">
         <Code2 size={16} />
-        <span>multi_platform_playbook.md</span>
+        <span>{currentStarter.fileName}</span>
         <span className="save-state">
           <CheckCircle2 size={14} />
           Saved 10:42
         </span>
+      </div>
+      <div className="starter-strip" aria-label="Starter intents">
+        {starters.map((starter) => (
+          <button
+            key={starter.id}
+            className={starter.id === selectedStarter ? "active" : ""}
+            onClick={() => onSelectStarter(starter.id)}
+          >
+            <strong>{starter.title}</strong>
+            <span>{starter.promise}</span>
+          </button>
+        ))}
       </div>
       <textarea
         value={markdown}

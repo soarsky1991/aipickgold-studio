@@ -24,6 +24,12 @@ Turn one source draft into:
 - a ZIP package for manual publishing;
 - a repeatable history/API path for advanced users.
 
+V2 reduces the first-run blank-page problem by giving users three starter intents:
+
+- Creator package: one draft into a multi-platform publish package.
+- Founder offer: one expertise area into a buyable service offer.
+- API case: one technical integration into a gated, reviewable workflow.
+
 ## Business Logic
 
 - Free value: editable draft-to-package workbench.
@@ -54,6 +60,7 @@ The product must not imply unsafe account automation. V2 keeps final publishing 
 - `/studio/` static route with V2 strategy strip: User, Job, Business, Trust.
 - `/founder/` static route for personal IP promotion.
 - Founder page commercial conversion layer with workflow audit, workbench setup, and API implementation offers.
+- Studio starter intents for creator packages, founder offers, and API cases.
 - Route normalization so `/studio`, `/studio/`, `/founder`, and `/founder/` resolve correctly.
 - Desktop and mobile QA for layout width, rendered titles, and active navigation.
 
