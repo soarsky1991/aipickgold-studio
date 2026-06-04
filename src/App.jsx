@@ -87,10 +87,11 @@ function routePath(path) {
 
 function currentRoute() {
   const pathname = window.location.pathname;
+  const normalize = (path) => (path.length > 1 ? path.replace(/\/$/, "") : path);
   if (basePath && pathname.startsWith(basePath)) {
-    return pathname.slice(basePath.length) || "/";
+    return normalize(pathname.slice(basePath.length) || "/");
   }
-  return pathname;
+  return normalize(pathname);
 }
 
 const md2wechatSignals = [
