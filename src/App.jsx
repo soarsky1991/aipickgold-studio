@@ -304,12 +304,50 @@ const privateCommunity = [
   {
     title: "小红书",
     label: "二维码占位",
-    text: "后续放小红书账号二维码，用于承接教程笔记、卡片版清单和日常更新。"
+    text: "后续放小红书账号二维码，用于发布教程笔记、卡片版清单和日常更新。"
   },
   {
     title: "微信群",
     label: "二维码占位",
-    text: "后续放微信群二维码，用于承接学习打卡、问题答疑和案例共创。"
+    text: "后续放学习群二维码，用于 Codex 打卡、问题答疑和案例共创。"
+  }
+];
+
+const founderAssets = {
+  avatar: routePath("/founder/avatar.png"),
+  portrait: routePath("/founder/founder-photo.jpg"),
+  workspace: routePath("/founder/founder-workspace.png"),
+  banner: routePath("/founder/x-banner-1500x500.png"),
+  xhsCover: routePath("/founder/xhs-cover-template.png"),
+  personalCover: routePath("/founder/xhs-cover-personal-ip.jpg"),
+  videoPoster: routePath("/founder/hyperframes-video-cover.jpg"),
+  video: routePath("/founder/personal-ip-system-broll.mp4")
+};
+
+const founderRepos = [
+  {
+    name: "aipickgold-codex-tutorial",
+    url: "https://github.com/soarsky1991/aipickgold-codex-tutorial",
+    label: "Codex 教程",
+    summary: "我把 Codex 学习路线、AGENTS.md、Skills、GitHub 自动化和内容工作流整理成中文教程。"
+  },
+  {
+    name: "hyperframes-creator-kit",
+    url: "https://github.com/soarsky1991/hyperframes-creator-kit",
+    label: "视频教程",
+    summary: "我用它沉淀 HyperFrames AI 视频教程、素材结构和可复用的创作者工作流。"
+  },
+  {
+    name: "xhs-cover-committee-skill",
+    url: "https://github.com/soarsky1991/xhs-cover-committee-skill",
+    label: "小红书封面",
+    summary: "我用 70+ 轮封面复盘，把小红书封面从感觉判断变成可执行的审查 Skill。"
+  },
+  {
+    name: "skill-radar",
+    url: "https://github.com/soarsky1991/skill-radar",
+    label: "流量雷达",
+    summary: "我持续追踪 AI Agent、Skills、MCP 和开源工具，用它抓选题、抓趋势、抓流量机会。"
   }
 ];
 
@@ -330,31 +368,36 @@ const tutorialParts = [
   },
   {
     number: "第 3 部分",
-    title: "工程工作流",
-    focus: "Git diff、Worktree、本地 Web 预览、Chrome 与 Computer Use",
-    lessons: ["分支与 PR", "隔离开发", "浏览器预览", "桌面操作"]
+    title: "项目上下文",
+    slug: "3-agents-context",
+    focus: "AGENTS.md、项目规则、公开边界、验收标准",
+    lessons: ["项目目标", "常用命令", "公开边界", "验收标准"]
   },
   {
     number: "第 4 部分",
     title: "CLI 与终端",
+    slug: "4-cli-terminal",
     focus: "安装、Flags、Slash Commands、会话管理、codex exec",
     lessons: ["CLI 安装", "基础命令", "全局参数", "自动化执行"]
   },
   {
     number: "第 5 部分",
     title: "IDE 与 Cloud",
+    slug: "5-cloud-github",
     focus: "IDE 扩展、Codex Web、云端任务和 GitHub 集成",
     lessons: ["IDE 工作流", "Cloud 入门", "云端任务", "Issue 到 PR"]
   },
   {
     number: "第 6 部分",
     title: "核心概念",
+    slug: "6-sandbox-permissions",
     focus: "Agent Loop、Thread Context、Sandbox、Approval、模型推理",
     lessons: ["执行循环", "上下文", "权限边界", "推理强度"]
   },
   {
     number: "第 7 部分",
     title: "配置与定制",
+    slug: "7-skills-mcp-plugins",
     focus: "config.toml、Permissions Profile、Rules、Hooks",
     lessons: ["配置文件", "权限档案", "命令规则", "生命周期脚本"]
   },
@@ -368,24 +411,28 @@ const tutorialParts = [
   {
     number: "第 9 部分",
     title: "实战工作流",
+    slug: "9-real-workflows",
     focus: "读代码、做功能、修 Bug、补测试、代码审查、前端 UI",
     lessons: ["接管代码库", "实现功能", "修复回归", "前端 QA"]
   },
   {
     number: "第 10 部分",
     title: "集成与自动化",
+    slug: "10-automation",
     focus: "Slack / Linear、CI/CD、GitHub Action、SDK 与 App Server",
     lessons: ["Linear 集成", "CI 自动化", "SDK", "内部平台"]
   },
   {
     number: "第 11 部分",
     title: "安全与治理",
+    slug: "11-security-governance",
     focus: "个人安全清单、企业治理、权限和审计边界",
     lessons: ["密钥边界", "审批策略", "团队规则", "上线检查"]
   },
   {
     number: "第 12 部分",
     title: "速查与附录",
+    slug: "12-cheatsheets-faq",
     focus: "CLI 速查、Slash 速查、FAQ、术语表",
     lessons: ["CLI 速查", "Slash 命令", "FAQ", "术语表"]
   }
@@ -522,6 +569,134 @@ const tutorialDocs = [
     ]
   },
   {
+    slug: "4-cli-terminal",
+    kicker: "终端自动化",
+    title: "CLI 与终端工作流",
+    summary:
+      "CLI 适合把 Codex 放进终端、脚本、远程机器和批量检查流程里。先掌握权限，再追求自动化。",
+    map: ["installCli()", "runFocusedTask()", "captureOutput()"],
+    sections: [
+      {
+        title: "我建议先练这 4 件事",
+        list: [
+          "用 CLI 打开一个小项目，只读总结项目结构。",
+          "练习传入明确任务、限制修改范围和要求输出验证结果。",
+          "用 resume 或 fork 保留上下文，不要每次从零开始。",
+          "把稳定任务变成可复用命令或脚本入口。"
+        ]
+      },
+      {
+        title: "CLI 适合做什么",
+        cards: [
+          ["批量检查", "例如文档链接、构建命令、测试命令、格式检查。"],
+          ["远程任务", "在服务器或远程仓库里做明确、可回滚的小任务。"],
+          ["自动化前置", "先让 Codex 输出计划和风险，再进入真正执行。"]
+        ]
+      },
+      {
+        title: "练习提示词",
+        code:
+          "请在当前目录只读检查项目。\n输出：入口文件、构建命令、测试命令、可自动化任务、风险边界。\n不要修改文件。"
+      }
+    ]
+  },
+  {
+    slug: "5-cloud-github",
+    kicker: "远程协作",
+    title: "Cloud、GitHub 与 PR 工作流",
+    summary:
+      "Cloud 和 GitHub 适合把明确任务交给 Codex 远程执行，但前提是权限、分支、Review 和密钥边界清楚。",
+    map: ["createIssue()", "runCloudTask()", "reviewPullRequest()"],
+    sections: [
+      {
+        title: "Issue 到 PR 的最小流程",
+        list: [
+          "Issue 里写清楚目标、范围、验收标准。",
+          "Codex 只改相关文件，不做顺手重构。",
+          "PR 里必须说明 diff、测试结果和剩余风险。",
+          "人工 review 后再合并。"
+        ]
+      },
+      {
+        title: "我会重点检查",
+        cards: [
+          ["权限", "仓库授权是否过宽，是否能看到不该看的内容。"],
+          ["分支", "是否隔离在独立分支，是否容易回滚。"],
+          ["证据", "是否有构建、测试、截图或日志作为验收依据。"]
+        ]
+      },
+      {
+        title: "Issue 模板",
+        code:
+          "目标：\n范围：\n不能修改：\n验收标准：\n必须运行的检查：\n交付：PR + 测试结果 + 风险说明"
+      }
+    ]
+  },
+  {
+    slug: "6-sandbox-permissions",
+    kicker: "安全边界",
+    title: "Sandbox、权限与审批",
+    summary:
+      "能不能放心用 Codex，核心看权限边界。我的原则是：读多一点可以，写和发布必须有门禁。",
+    map: ["limitScope()", "requestApproval()", "verifyBeforeShip()"],
+    sections: [
+      {
+        title: "权限分层",
+        list: [
+          "只读：探索项目、总结风险、写计划。",
+          "受限写入：只改指定文件或目录。",
+          "命令执行：必须说明命令目的和预期结果。",
+          "发布部署：必须保留人工确认和回滚路径。"
+        ]
+      },
+      {
+        title: "高风险内容",
+        cards: [
+          ["密钥", "token、cookie、SSH、OSS、DNS、env 文件不要进入公开仓库。"],
+          ["账号", "涉及平台账号发布、支付、权限变更时保留人工操作。"],
+          ["生产环境", "没有备份、回滚和验证，不让 AI 直接动。"]
+        ]
+      },
+      {
+        title: "安全提示词",
+        code:
+          "在执行前，请先列出本任务涉及的文件、命令、风险和回滚方式。\n未经我确认，不要执行部署、删除、账号发布或密钥相关操作。"
+      }
+    ]
+  },
+  {
+    slug: "7-skills-mcp-plugins",
+    kicker: "扩展能力",
+    title: "Skills、MCP 与插件",
+    summary:
+      "Skills 固化方法，MCP 接入工具，插件扩展场景。学会它们，Codex 才能从写代码变成工作流中枢。",
+    map: ["writeSkill()", "connectTool()", "verifyBoundary()"],
+    sections: [
+      {
+        title: "三者怎么分工",
+        cards: [
+          ["Skills", "把重复步骤写成稳定方法，例如教程更新、截图验收、发布包制作。"],
+          ["MCP", "把外部系统接进来，例如 GitHub、Linear、Figma、数据源。"],
+          ["插件", "为具体场景提供更完整的能力，例如产品设计、创意生产、浏览器验收。"]
+        ]
+      },
+      {
+        title: "我的使用顺序",
+        list: [
+          "先用普通对话跑通流程。",
+          "把重复步骤写成 Skill。",
+          "需要真实系统数据时再接 MCP。",
+          "涉及视觉、产品、浏览器时使用对应插件验收。"
+        ]
+      },
+      {
+        title: "练习任务",
+        code:
+          "请把这个重复流程整理成一个 Skill 草案。\n要求包含：触发场景、输入、步骤、安全边界、输出格式、验收标准。"
+      }
+    ]
+  },
+  {
     slug: "8-agents-skills",
     kicker: "扩展能力",
     title: "把重复工作流沉淀成 Skills",
@@ -549,6 +724,134 @@ const tutorialDocs = [
         title: "内容生产 Skill 提示",
         code:
           "请把这篇教程改写成：公众号大纲、小红书卡片提纲、X 线程和视频脚本。\n保留人工审核清单，不自动发布，不暴露内部来源策略。"
+      }
+    ]
+  },
+  {
+    slug: "9-real-workflows",
+    kicker: "实战路线",
+    title: "真实项目工作流",
+    summary:
+      "我不建议只学命令。你要把 Codex 放进真实项目：读代码、做功能、修 Bug、补测试、重构和前端验收。",
+    map: ["understandCodebase()", "makeSmallChange()", "proveResult()"],
+    sections: [
+      {
+        title: "项目接管顺序",
+        list: [
+          "先让 Codex 画出项目结构和运行方式。",
+          "再找一个低风险小任务。",
+          "每次只改一个目标，不顺手重构。",
+          "用构建、测试、截图或日志证明结果。"
+        ]
+      },
+      {
+        title: "常见实战包",
+        cards: [
+          ["功能实现", "需求拆解、文件定位、最小改动、测试验证。"],
+          ["Bug 修复", "复现、定位、补测试、解释根因。"],
+          ["前端 QA", "移动端、溢出、图片加载、真实浏览器截图。"]
+        ]
+      },
+      {
+        title: "练习提示词",
+        code:
+          "请先只读定位实现这个功能需要看的文件。\n列出最小修改方案、风险点和验收方法。\n等我确认后再修改。"
+      }
+    ]
+  },
+  {
+    slug: "10-automation",
+    kicker: "自动化",
+    title: "集成与自动化",
+    summary:
+      "自动化不是让 AI 乱跑，而是把已经验证过的流程交给机器重复执行。",
+    map: ["defineTrigger()", "runChecks()", "publishEvidence()"],
+    sections: [
+      {
+        title: "适合自动化的任务",
+        list: [
+          "定期检查仓库、文档和链接。",
+          "根据 Issue 生成初版 PR。",
+          "构建后生成验收报告。",
+          "把教程拆成卡片、脚本和发布包草稿。"
+        ]
+      },
+      {
+        title: "我会保留的门禁",
+        cards: [
+          ["发布门禁", "账号发布、生产部署和付费动作保留人工确认。"],
+          ["内容门禁", "公开文案先做来源和敏感信息检查。"],
+          ["质量门禁", "构建、测试、截图或日志必须留下证据。"]
+        ]
+      },
+      {
+        title: "自动化任务模板",
+        code:
+          "触发条件：\n输入：\n允许修改：\n禁止修改：\n必须检查：\n输出证据：\n人工确认点："
+      }
+    ]
+  },
+  {
+    slug: "11-security-governance",
+    kicker: "治理",
+    title: "安全与治理",
+    summary:
+      "越是想用 Codex 提效，越要把安全边界写清楚。安全不是阻碍效率，而是让流程能长期复用。",
+    map: ["classifyRisk()", "protectSecrets()", "auditChanges()"],
+    sections: [
+      {
+        title: "个人项目安全清单",
+        list: [
+          "本地密钥不进仓库。",
+          "公开页面不暴露内部研究对象。",
+          "部署前扫描敏感词和路径。",
+          "高风险命令先解释再执行。"
+        ]
+      },
+      {
+        title: "团队治理清单",
+        cards: [
+          ["权限", "谁能让 Codex 读写哪些仓库。"],
+          ["审计", "每次改动是否有记录、PR 和验证证据。"],
+          ["回滚", "失败后如何恢复上一版。"]
+        ]
+      },
+      {
+        title: "上线前提示词",
+        code:
+          "请做上线前检查：构建结果、路由、移动端、图片视频、敏感信息、回滚路径。\n只汇报结果，不执行发布。"
+      }
+    ]
+  },
+  {
+    slug: "12-cheatsheets-faq",
+    kicker: "速查",
+    title: "速查与 FAQ",
+    summary:
+      "最后给你一张速查表：遇到问题时，不要慌，先判断是上下文、权限、命令、网络还是产品意图没讲清楚。",
+    map: ["checkContext()", "checkPermission()", "checkEvidence()"],
+    sections: [
+      {
+        title: "常用排查顺序",
+        list: [
+          "上下文够不够：README、AGENTS.md、命令是否清楚。",
+          "权限对不对：是否被 sandbox 或审批策略拦住。",
+          "命令是否能跑：本地依赖、端口、网络是否正常。",
+          "验收是否明确：有没有测试、截图或构建结果。"
+        ]
+      },
+      {
+        title: "FAQ",
+        cards: [
+          ["Codex 能不能直接部署？", "可以协助，但我建议保留人工确认和回滚路径。"],
+          ["能不能复制别人的教程？", "不要。学结构和方法，公开内容要原创改写。"],
+          ["新手先学什么？", "先学 App、AGENTS.md、小任务 diff、构建验收。"]
+        ]
+      },
+      {
+        title: "收尾提示词",
+        code:
+          "请总结本次任务：改了什么、为什么改、跑了哪些检查、还有什么风险、下一步建议是什么。"
       }
     ]
   }
@@ -714,7 +1017,11 @@ function App() {
     return <FounderPage />;
   }
 
-  return <StudioApp />;
+  if (route === "/studio") {
+    return <StudioApp />;
+  }
+
+  return <CodexLearningHome />;
 }
 
 function CodexLearningHome() {
@@ -928,7 +1235,7 @@ function CodexLearningHome() {
         <section className="codex-section practice-packs">
           <SectionIntro
             label="Practice packs"
-            title="把学习站接回 AI PickGold 的产品能力"
+            title="把教程变成能拿走的实战包"
             text="用户不是只读教程，而是拿走可运行的模板、发布包和工作流。"
           />
           <div className="pack-grid">
@@ -946,11 +1253,11 @@ function CodexLearningHome() {
           </div>
         </section>
 
-        <section className="codex-section private-community" id="private-community" aria-label="AI PickGold private community">
+        <section className="codex-section private-community" id="learn-with-me" aria-label="Learn Codex with AI PickGold">
           <SectionIntro
             label="Community"
-            title="把学习流量接回 AI PickGold 私域"
-            text="教程负责建立信任，私域负责持续陪跑。这里预留二维码位，后续直接替换成真实图片。"
+            title="想系统学习 Codex，可以从这里找我"
+            text="教程负责打基础，学习群和小红书负责持续更新、答疑和案例共创。这里预留二维码位，后续直接替换成真实图片。"
           />
           <div className="qr-grid">
             {privateCommunity.map((item) => (
@@ -975,7 +1282,7 @@ function CodexLearningHome() {
   );
 }
 
-function CodexHeader() {
+function CodexHeader({ current = "Codex" }) {
   return (
     <header className="codex-header">
       <a className="codex-brand" href={routePath("/codex")}>
@@ -985,7 +1292,7 @@ function CodexHeader() {
       <nav className="codex-nav" aria-label="Codex tutorial navigation">
         {navItems.map((item) => (
           <a
-            className={item.label === "Codex" ? "active" : ""}
+            className={item.label === current ? "active" : ""}
             href={routePath(item.path)}
             key={item.label}
           >
@@ -1337,152 +1644,129 @@ function StrategyCard({ icon: Icon, label, text }) {
 function FounderPage() {
   return (
     <div className="studio-shell founder-shell">
-      <Header packageStatus="founder IP" current="Founder IP" />
-      <main className="founder-page" aria-label="Founder IP profile">
-        <section className="founder-hero">
-          <div className="founder-copy">
-            <p className="muted small">High Soar · AI workflow operator</p>
-            <h1>
-              我把 AI 工作流产品化：
-              <br />
-              可复用、可审查、
-              <br />
-              可交付、可变现。
-            </h1>
+      <CodexHeader current="Founder IP" />
+      <main className="founder-page founder-page-redesign" aria-label="Founder IP profile">
+        <section className="founder-hero-v2">
+          <div className="founder-hero-text">
+            <div className="founder-identity-row">
+              <img src={founderAssets.avatar} alt="AI PickGold founder avatar" />
+              <div>
+                <strong>智辰老师</strong>
+                <span>AI PickGold · Codex / 内容工作流</span>
+              </div>
+            </div>
+            <h1>我是智辰老师，跟我学 Codex 和 AI 变现工作流。</h1>
             <p>
-              AI PickGold 不是展示 AI 魔法，而是把 Codex 学习、内容生产、风险审查和个人 IP 交付变成一套可运营的系统。
+              我是一个 AI 知识博主，长期拆解 AI 内容生产、Codex 项目接管、跨平台发布和个人 IP 资产化。
+              我紧抓流量机会，但不卖焦虑、不讲玄学，只给方法、证据、步骤和可复用模板。
             </p>
             <div className="founder-actions">
-              <a className="primary-action" href={routePath("/codex")}>
-                <LayoutPanelLeft size={16} />
-                查看 Codex 路线
+              <a className="primary-action founder-primary" href={routePath("/codex")}>
+                <ListChecks size={16} />
+                从 Codex 课程开始
               </a>
-              <a className="secondary-link" href={routePath("/codex#private-community")}>
-                <Globe2 size={16} />
-                私域交流入口
+              <a className="secondary-link founder-secondary" href="#learn-with-founder">
+                <MessageSquareText size={16} />
+                找我学习
               </a>
             </div>
+            <div className="founder-proof-strip" aria-label="Founder proof points">
+              <span>AI 工作流</span>
+              <span>内容资产</span>
+              <span>风险清单</span>
+              <span>变现实验</span>
+            </div>
           </div>
 
-          <aside className="founder-proof">
-            <div>
-              <span>Positioning</span>
-              <strong>AI 内容工作流产品化顾问</strong>
+          <div className="founder-portrait-stage">
+            <img className="founder-portrait" src={founderAssets.portrait} alt="Founder at AI workflow desk" />
+            <div className="founder-photo-note">
+              <strong>长期主义 x 复利思维</strong>
+              <span>先求正确，再求观点。</span>
             </div>
-            <div>
-              <span>Proof assets</span>
-              <p>Codex 教程、AI PickGold 内容包、Figma prototype、GitHub 仓库、Linear delivery loop</p>
-            </div>
-            <div>
-              <span>Boundary</span>
-              <p>生成、审查、导出、交付；账号发布、私密资料和上线动作保持人工确认。</p>
-            </div>
-          </aside>
+          </div>
         </section>
 
-        <section className="founder-visuals" aria-label="Founder IP visual system">
-          <article className="photo-card portrait-card">
-            <div className="photo-placeholder">
-              <UserRound size={46} />
-              <span>个人 IP 主视觉照</span>
-            </div>
+        <section className="founder-media-strip" aria-label="Founder visual assets">
+          <img src={founderAssets.banner} alt="AI PickGold banner" />
+          <img src={founderAssets.xhsCover} alt="AI PickGold Xiaohongshu cover template" />
+          <img src={founderAssets.personalCover} alt="Personal IP cover" />
+        </section>
+
+        <section className="founder-story-grid">
+          <article className="founder-work-card">
+            <img src={founderAssets.workspace} alt="Codex learning and content workflow workspace" />
             <div>
-              <span>Portrait</span>
-              <h2>一张能被反复使用的“Codex 导师”主视觉。</h2>
-              <p>预留头像、半身照或工作照位置，后续用于首页、公众号、小红书封面和课程页统一露出。</p>
+              <span>Method</span>
+              <h2>用 AI 把信息、工具和市场机会拆成可执行流程。</h2>
+              <p>每个教程都落到一个可复制动作：如何扫描项目、写上下文、做发布包、留证据、复盘结果。</p>
             </div>
           </article>
 
-          <article className="photo-card desk-shot">
-            <div className="desk-visual" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </div>
+          <article className="founder-video-card">
+            <video
+              src={founderAssets.video}
+              poster={founderAssets.videoPoster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
             <div>
-              <span>Workspace</span>
-              <h2>把真实工作流做成视觉资产。</h2>
-              <p>展示 Codex、仓库、教程、发布包和验收清单，让个人 IP 看起来像一个可靠系统。</p>
-            </div>
-          </article>
-
-          <article className="photo-card proof-shot">
-            <div className="proof-stack" aria-hidden="true">
-              <span>教程</span>
-              <span>清单</span>
-              <span>案例</span>
-            </div>
-            <div>
-              <span>Proof Wall</span>
-              <h2>证明不是靠口号，而是靠可交付证据。</h2>
-              <p>后续可放 GitHub 更新、课程目录、读者反馈、交付截图和社群打卡成果。</p>
+              <span>HyperFrames</span>
+              <h2>把讲解、封面和视频流程做成作品证据。</h2>
+              <p>不是只写教程，也会把教程变成短视频脚本、封面图、动态素材和发布包。</p>
             </div>
           </article>
         </section>
 
-        <section className="founder-grid">
+        <section className="founder-method-v2" aria-label="Founder method">
           <FounderBlock
-            title="我服务谁"
-            body="个人 IP、知识创作者、AI 工具创业者，以及需要把内容生产从临时发挥变成稳定流程的小团队。"
+            title="拆信息"
+            body="把资料、仓库、工具和市场信号拆成清晰问题，不让 AI 乱跑。"
           />
           <FounderBlock
-            title="我解决什么"
-            body="从一篇草稿或一个项目开始，拆成学习路径、平台化输出、审查清单、导出包和复盘入口。"
+            title="做流程"
+            body="把一次性操作写成 AGENTS.md、清单、Skill、教程和可复用模板。"
           />
           <FounderBlock
-            title="我怎么商业化"
-            body="免费教程建立信任；高级版承接陪跑、团队协作、私有流程配置和顾问式搭建。"
-          />
-          <FounderBlock
-            title="我为什么可信"
-            body="我把 brief、设计、工程、上线、Figma、Linear 和交付证据放在同一个可追踪闭环里。"
+            title="留证据"
+            body="用 GitHub、截图、构建、发布包和复盘记录证明每一步真的跑通。"
           />
         </section>
 
-        <section className="service-offers" aria-label="Founder service offers">
-          <div className="section-kicker">
-            <p className="muted small">Commercial paths</p>
-            <h2>从一次流程体检，到一个可上线的 AI 工作台。</h2>
+        <section className="founder-repo-section" aria-label="Founder open source repositories">
+          <div className="founder-section-heading">
+            <span>Open Source</span>
+            <h2>我公开沉淀的 AI 教程和流量工具仓库</h2>
+            <p>这些仓库不是摆样子，而是我的内容生产、教程交付和流量复盘证据。</p>
           </div>
-          <div className="offer-cards">
-            <FounderOffer
-              icon={ListChecks}
-              title="AI 工作流体检"
-              audience="适合已经在做内容，但流程分散、难复用的人。"
-              deliverable="交付流程地图、风险边界、7 天改造清单。"
-            />
-            <FounderOffer
-              icon={LayoutPanelLeft}
-              title="内容工作流搭建"
-              audience="适合个人 IP、知识创作者和小团队。"
-              deliverable="交付草稿入口、平台输出、审查清单、导出包。"
-            />
-            <FounderOffer
-              icon={KeyRound}
-              title="自动化边界规划"
-              audience="适合未来要接入团队协作、私有流程和自动化能力的业务。"
-              deliverable="交付权限分层、人工门禁、上线前检查清单。"
-            />
+          <div className="founder-repo-grid">
+            {founderRepos.map((repo) => (
+              <a className="founder-repo-card" href={repo.url} key={repo.name} target="_blank" rel="noreferrer">
+                <span>{repo.label}</span>
+                <h3>{repo.name}</h3>
+                <p>{repo.summary}</p>
+              </a>
+            ))}
           </div>
         </section>
 
-        <section className="offer-band">
+        <section className="founder-learn-cta" id="learn-with-founder">
           <div>
-            <p className="muted small">Current offer</p>
-            <h2>把你的 Codex 学习和内容流程做成一个可展示、可复用、可交付的 AI 系统。</h2>
+            <h2>想系统学习 Codex、AI 内容生产和个人 IP 变现，来找我。</h2>
+            <p>适合想把 AI 从“玩工具”变成“做项目、做内容、做开源仓库、做可复用资产”的人。</p>
           </div>
-          <div className="offer-actions">
-            <a className="primary-action" href={routePath("/codex")}>
-              <PackageCheck size={16} />
-              See Codex path
-            </a>
-            <a
-              className="secondary-link"
-              href="https://github.com/soarsky1991/aipickgold-studio/issues/new?title=AI%20workflow%20audit%20request"
-            >
-              <MessageSquareText size={16} />
-              Start a brief
-            </a>
+          <div className="founder-qr-row" aria-label="Founder learning QR placeholders">
+            <div className="founder-mini-qr">
+              <span>小红书</span>
+              <strong>QR</strong>
+            </div>
+            <div className="founder-mini-qr">
+              <span>学习群</span>
+              <strong>QR</strong>
+            </div>
           </div>
         </section>
       </main>
