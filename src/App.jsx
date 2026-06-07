@@ -150,7 +150,7 @@ const platformTabs = [
 
 const navItems = [
   { label: "Codex", path: "/codex" },
-  { label: "Founder IP", path: "/founder" }
+  { label: "智辰老师", path: "/founder" }
 ];
 
 const basePath = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
@@ -1665,8 +1665,8 @@ function StrategyCard({ icon: Icon, label, text }) {
 function FounderPage() {
   return (
     <div className="studio-shell founder-shell">
-      <CodexHeader current="Founder IP" />
-      <main className="founder-page founder-page-redesign" aria-label="Founder IP profile">
+      <CodexHeader current="智辰老师" />
+      <main className="founder-page founder-page-redesign" aria-label="智辰老师个人主页">
         <section className="founder-hero-v2">
           <div className="founder-hero-text">
             <div className="founder-identity-row">
@@ -1691,7 +1691,7 @@ function FounderPage() {
                 找我学习
               </a>
             </div>
-            <div className="founder-proof-strip" aria-label="Founder proof points">
+            <div className="founder-proof-strip" aria-label="智辰老师能力标签">
               <span>AI 工作流</span>
               <span>内容资产</span>
               <span>风险清单</span>
@@ -1700,7 +1700,7 @@ function FounderPage() {
           </div>
 
           <div className="founder-portrait-stage">
-            <img className="founder-portrait" src={founderAssets.portrait} alt="Founder at AI workflow desk" />
+            <img className="founder-portrait" src={founderAssets.portrait} alt="智辰老师 AI 工作流照片" />
             <div className="founder-photo-note">
               <strong>长期主义 x 复利思维</strong>
               <span>先求正确，再求观点。</span>
@@ -1708,7 +1708,7 @@ function FounderPage() {
           </div>
         </section>
 
-        <section className="founder-media-strip" aria-label="Founder visual assets">
+        <section className="founder-media-strip" aria-label="智辰老师视觉素材">
           <img src={founderAssets.banner} alt="AI PickGold banner" />
           <img src={founderAssets.xhsCover} alt="AI PickGold Xiaohongshu cover template" />
           <img src={founderAssets.personalCover} alt="Personal IP cover" />
@@ -1742,7 +1742,7 @@ function FounderPage() {
           </article>
         </section>
 
-        <section className="founder-method-v2" aria-label="Founder method">
+        <section className="founder-method-v2" aria-label="智辰老师方法论">
           <FounderBlock
             title="拆信息"
             body="把资料、仓库、工具和市场信号拆成清晰问题，不让 AI 乱跑。"
@@ -1757,7 +1757,7 @@ function FounderPage() {
           />
         </section>
 
-        <section className="founder-repo-section" aria-label="Founder open source repositories">
+        <section className="founder-repo-section" aria-label="智辰老师开源仓库">
           <div className="founder-section-heading">
             <span>Open Source</span>
             <h2>我公开沉淀的 AI 教程和流量工具仓库</h2>
@@ -1779,7 +1779,7 @@ function FounderPage() {
             <h2>想系统学习 Codex、AI 内容生产和个人 IP 变现，来找我。</h2>
             <p>适合想把 AI 从“玩工具”变成“做项目、做内容、做开源仓库、做可复用资产”的人。</p>
           </div>
-          <div className="founder-qr-row" aria-label="Founder learning QR placeholders">
+          <div className="founder-qr-row" aria-label="智辰老师学习入口二维码占位">
             <div className="founder-mini-qr">
               <span>小红书</span>
               <strong>
