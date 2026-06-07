@@ -1798,23 +1798,19 @@ blockquote {
 
 .founder-qr-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
 .founder-mini-qr {
-  width: 132px;
-  height: 132px;
+  width: 156px;
   display: grid;
   place-items: center;
   gap: 8px;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 14px;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-    rgba(255, 255, 255, 0.1);
-  background-size: 12px 12px;
+  background: rgba(255, 255, 255, 0.12);
   color: #ffffff;
 }
 
@@ -1824,15 +1820,13 @@ blockquote {
   font-weight: 800;
 }
 
-.founder-mini-qr strong {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+.founder-mini-qr img {
+  width: 132px;
+  height: 132px;
+  display: block;
+  object-fit: contain;
+  border-radius: 10px;
   background: #ffffff;
-  color: #1557d9;
-  font-size: 13px;
 }
 
 .codex-shell {
@@ -3572,12 +3566,12 @@ blockquote {
 
   .founder-qr-row {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .founder-mini-qr {
     width: 100%;
-    height: 116px;
+    min-height: 176px;
   }
 
   .founder-copy {

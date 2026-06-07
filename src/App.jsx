@@ -8,6 +8,7 @@ import {
   Globe2,
   LayoutPanelLeft,
   ListChecks,
+  MessageSquareText,
   ShieldCheck,
   Zap
 } from "lucide-react";
@@ -37,7 +38,8 @@ const localeLabels = {
       "AI PickGold Codex 中文学习站：60 篇 Codex 实战教程，覆盖 AGENTS.md、Skills、MCP、插件、权限、Hooks 与 GitHub 自动化工作流。",
     navItems: [
       { label: "Codex", path: "/codex" },
-      { label: "排版工具", path: "https://wxmd.aipickgold.com", external: true }
+      { label: "智辰老师", path: "https://myself.aipickgold.com", external: true },
+      { label: "排版工具", path: "https://tools.aipickgold.com", external: true }
     ],
     headerAction: "学习仓库",
     languageLabel: "语言",
@@ -94,7 +96,8 @@ const localeLabels = {
       "AI PickGold Codex is a practical 60-lesson Codex learning hub covering AGENTS.md, Skills, MCP, plugins, permissions, Hooks, and GitHub automation.",
     navItems: [
       { label: "Codex", path: "/codex" },
-      { label: "Formatting Tool", path: "https://wxmd.aipickgold.com", external: true }
+      { label: "Zhichen", path: "https://myself.aipickgold.com", external: true },
+      { label: "Formatting Tool", path: "https://tools.aipickgold.com", external: true }
     ],
     headerAction: "Course Repo",
     languageLabel: "Language",
@@ -459,6 +462,62 @@ const englishCommunityCards = [
   }
 ];
 
+const founderAssets = {
+  avatar: routePath("/founder/avatar.png"),
+  portrait: routePath("/founder/founder-photo.jpg"),
+  workspace: routePath("/founder/founder-workspace.png"),
+  banner: routePath("/founder/x-banner-1500x500.png"),
+  xhsCover: routePath("/founder/xhs-cover-template.png"),
+  personalCover: routePath("/founder/xhs-cover-personal-ip.jpg"),
+  videoPoster: routePath("/founder/hyperframes-video-cover.jpg"),
+  video: routePath("/founder/personal-ip-system-broll.mp4")
+};
+
+const founderRepos = [
+  {
+    name: "aipickgold-codex-tutorial",
+    url: "https://github.com/soarsky1991/aipickgold-codex-tutorial",
+    label: "Codex 教程",
+    summary: "把 Codex 学习路线、AGENTS.md、Skills、GitHub 自动化和真实项目练习整理成 60 课。"
+  },
+  {
+    name: "Codex 60 课学习站",
+    url: "https://codex.aipickgold.com",
+    label: "学习站",
+    summary: "从桌面端、CLI、Cloud、MCP、插件到安全门禁，把学习路径做成可点击课程。"
+  },
+  {
+    name: "AI PickGold 排版工具",
+    url: "https://tools.aipickgold.com",
+    label: "工具",
+    summary: "把 Markdown 内容排成公众号与图文卡片，服务内容生产和教程输出。"
+  },
+  {
+    name: "AI 实战复盘",
+    url: "https://myself.aipickgold.com",
+    label: "个人主页",
+    summary: "沉淀我对 Codex、AI 内容生产、项目接管和长期学习方法的公开记录。"
+  }
+];
+
+const founderQrCards = [
+  {
+    title: "小红书",
+    image: "/community/xiaohongshu-qr.jpg",
+    alt: "宸的 AI 复盘室小红书二维码"
+  },
+  {
+    title: "个人微信",
+    image: "/community/wechat-zhichen-qr-square.jpg",
+    alt: "智辰个人微信二维码"
+  },
+  {
+    title: "Codex 学习群",
+    image: "/community/codex-learning-group-qr.jpg",
+    alt: "Codex 学习群二维码"
+  }
+];
+
 const localeOptions = [
   { code: "zh", label: "中文" },
   { code: "en", label: "EN" }
@@ -598,8 +657,12 @@ export default function App() {
   const route = currentRoute();
   const [locale, setLocale] = useLocale();
   const content = useMemo(() => getLocalizedContent(locale), [locale]);
+  const host = window.location.hostname;
+  const isMyselfHost = host === "myself.aipickgold.com";
+  const isFounderRoute = isMyselfHost || route === "/founder" || route === "/about";
 
   useEffect(() => {
+    if (isFounderRoute) return;
     document.title = content.copy.metaTitle;
     const description = document.querySelector('meta[name="description"]');
     if (description) description.setAttribute("content", content.copy.metaDescription);
@@ -607,13 +670,180 @@ export default function App() {
     if (ogTitle) ogTitle.setAttribute("content", content.copy.metaTitle);
     const ogDescription = document.querySelector('meta[property="og:description"]');
     if (ogDescription) ogDescription.setAttribute("content", content.copy.metaDescription);
-  }, [content]);
+  }, [content, isFounderRoute]);
+
+  if (isFounderRoute) {
+    return <FounderPage />;
+  }
 
   if (route.startsWith("/tutorial")) {
     return <CodexTutorialDetail content={content} locale={locale} setLocale={setLocale} />;
   }
 
   return <CodexLearningHome content={content} locale={locale} setLocale={setLocale} />;
+}
+
+function FounderHeader() {
+  return (
+    <header className="codex-header">
+      <a className="codex-brand" href="https://myself.aipickgold.com">
+        <span>
+          <img src={founderAssets.avatar} alt="智辰老师" />
+        </span>
+        <strong>AI PickGold</strong>
+      </a>
+      <nav className="codex-nav" aria-label="智辰老师个人主页导航">
+        <a href="https://codex.aipickgold.com">Codex</a>
+        <a className="active" href="https://myself.aipickgold.com">智辰老师</a>
+        <a href="https://tools.aipickgold.com">排版工具</a>
+      </nav>
+      <div className="codex-header-tools">
+        <a className="codex-header-action" href="#learn-with-founder">
+          找我学习
+        </a>
+      </div>
+    </header>
+  );
+}
+
+function FounderPage() {
+  useEffect(() => {
+    document.documentElement.lang = "zh-CN";
+    document.title = "智辰老师 · AI PickGold";
+    const description = document.querySelector('meta[name="description"]');
+    if (description) {
+      description.setAttribute("content", "智辰老师的 AI PickGold 个人主页：Codex 学习、AI 实战工作流、内容生产和长期复盘。");
+    }
+  }, []);
+
+  return (
+    <div className="studio-shell founder-shell">
+      <FounderHeader />
+      <main className="founder-page founder-page-redesign" aria-label="智辰老师个人主页">
+        <section className="founder-hero-v2">
+          <div className="founder-hero-text">
+            <div className="founder-identity-row">
+              <img src={founderAssets.avatar} alt="智辰老师头像" />
+              <div>
+                <strong>智辰老师</strong>
+                <span>AI PickGold · Codex / AI 实战工作流</span>
+              </div>
+            </div>
+            <h1>我是智辰老师，跟我学 Codex 和 AI 实战工作流。</h1>
+            <p>
+              我长期拆解 Codex 项目接管、AI 内容生产、跨平台发布和个人知识资产沉淀。
+              不讲玄学，只讲方法、证据、步骤和可复用模板。
+            </p>
+            <div className="founder-actions">
+              <a className="primary-action founder-primary" href="https://codex.aipickgold.com">
+                <ListChecks size={16} />
+                从 Codex 课程开始
+              </a>
+              <a className="secondary-link founder-secondary" href="#learn-with-founder">
+                <MessageSquareText size={16} />
+                找我学习
+              </a>
+            </div>
+            <div className="founder-proof-strip" aria-label="智辰老师能力标签">
+              <span>Codex 学习</span>
+              <span>AI 工作流</span>
+              <span>内容资产</span>
+              <span>复盘清单</span>
+            </div>
+          </div>
+
+          <div className="founder-portrait-stage">
+            <img className="founder-portrait" src={founderAssets.portrait} alt="智辰老师 AI 工作流照片" />
+            <div className="founder-photo-note">
+              <strong>长期主义 x 复利思维</strong>
+              <span>先求正确，再求观点。</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="founder-media-strip" aria-label="智辰老师视觉素材">
+          <img src={founderAssets.banner} alt="AI PickGold banner" />
+          <img src={founderAssets.xhsCover} alt="AI PickGold 小红书封面模板" />
+          <img src={founderAssets.personalCover} alt="AI PickGold 个人知识卡片封面" />
+        </section>
+
+        <section className="founder-story-grid">
+          <article className="founder-work-card">
+            <img src={founderAssets.workspace} alt="Codex 学习和内容工作流工作台" />
+            <div>
+              <span>Method</span>
+              <h2>用 AI 把信息、工具和项目机会拆成可执行流程。</h2>
+              <p>每个教程都落到一个可复制动作：如何扫描项目、写上下文、留证据、做验收、复盘结果。</p>
+            </div>
+          </article>
+
+          <article className="founder-video-card">
+            <video
+              src={founderAssets.video}
+              poster={founderAssets.videoPoster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
+            <div>
+              <span>HyperFrames</span>
+              <h2>把讲解、封面和视频流程做成作品证据。</h2>
+              <p>教程不只停留在文档，也会变成短视频脚本、封面图、动态素材和发布包。</p>
+            </div>
+          </article>
+        </section>
+
+        <section className="founder-method-v2" aria-label="智辰老师方法论">
+          <FounderBlock title="拆信息" body="把资料、仓库、工具和市场信号拆成清晰问题，不让 AI 乱跑。" />
+          <FounderBlock title="做流程" body="把一次性操作写成 AGENTS.md、清单、Skill、教程和可复用模板。" />
+          <FounderBlock title="留证据" body="用 GitHub、截图、构建、发布包和复盘记录证明每一步真的跑通。" />
+        </section>
+
+        <section className="founder-repo-section" aria-label="智辰老师公开内容">
+          <div className="founder-section-heading">
+            <span>Public Work</span>
+            <h2>我公开沉淀的 AI 教程和工具入口</h2>
+            <p>这些内容不是摆样子，而是我的教程交付、内容生产和长期复盘记录。</p>
+          </div>
+          <div className="founder-repo-grid">
+            {founderRepos.map((repo) => (
+              <a className="founder-repo-card" href={repo.url} key={repo.name} target="_blank" rel="noreferrer">
+                <span>{repo.label}</span>
+                <h3>{repo.name}</h3>
+                <p>{repo.summary}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="founder-learn-cta" id="learn-with-founder">
+          <div>
+            <h2>想系统学习 Codex、AI 内容生产和项目工作流，来找我。</h2>
+            <p>适合想把 AI 从“玩工具”变成“做项目、做内容、做开源仓库、做可复用资产”的人。</p>
+          </div>
+          <div className="founder-qr-row" aria-label="智辰老师学习入口二维码">
+            {founderQrCards.map((card) => (
+              <div className="founder-mini-qr" key={card.title}>
+                <span>{card.title}</span>
+                <img src={routePath(card.image)} alt={card.alt} loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+function FounderBlock({ title, body }) {
+  return (
+    <article className="founder-block">
+      <h2>{title}</h2>
+      <p>{body}</p>
+    </article>
+  );
 }
 
 function CodexLearningHome({ content, locale, setLocale }) {
