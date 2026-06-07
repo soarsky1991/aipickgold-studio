@@ -2635,7 +2635,8 @@ blockquote {
 }
 
 .codex-feature-card h2,
-.part-card h2 {
+.part-card h2,
+.lesson-card h2 {
   margin: 0;
   color: var(--codex-text);
   font-size: 20px;
@@ -2643,20 +2644,26 @@ blockquote {
 }
 
 .codex-feature-card p,
-.part-card p {
+.part-card p,
+.lesson-card p {
   margin: 0;
   color: #55554f;
   line-height: 1.7;
 }
 
-.parts-grid {
+.parts-grid,
+.lesson-catalog-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
-.part-card {
-  min-height: 266px;
+.lesson-catalog-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.part-card,
+.lesson-card {
   display: grid;
   align-content: start;
   gap: 12px;
@@ -2668,16 +2675,45 @@ blockquote {
   transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 }
 
-.part-card[href]:hover {
+.part-card {
+  min-height: 266px;
+}
+
+.lesson-card {
+  min-height: 226px;
+}
+
+.part-card[href]:hover,
+.lesson-card[href]:hover {
   border-color: rgba(10, 132, 255, 0.46);
   box-shadow: 0 18px 40px rgba(18, 77, 154, 0.1);
   transform: translateY(-2px);
 }
 
-.part-card > span {
+.part-card > span,
+.lesson-card > span {
   color: var(--codex-primary);
   font-size: 12px;
   font-weight: 850;
+}
+
+.lesson-card > strong {
+  width: fit-content;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: #0b2f7f;
+  background: rgba(10, 132, 255, 0.1);
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.lesson-card h2 {
+  font-size: 18px;
+}
+
+.lesson-card p {
+  font-size: 14px;
+  line-height: 1.65;
 }
 
 .part-card ul {
@@ -3743,6 +3779,7 @@ blockquote {
   .path-grid,
   .feature-grid,
   .parts-grid,
+  .lesson-catalog-grid,
   .community-grid,
   .viral-grid,
   .pack-grid,
@@ -3771,6 +3808,7 @@ blockquote {
   .path-card,
   .codex-feature-card,
   .part-card,
+  .lesson-card,
   .community-card,
   .pack-card,
   .viral-card {

@@ -561,8 +561,21 @@ function buildParts(groups, locale) {
     title: group.group,
     slug: `${String(group.lessons[0].number).padStart(2, "0")}-${group.lessons[0].slug}`,
     focus: locale === "en" ? `${group.lessons.length} lessons` : `${group.lessons.length} 篇教程`,
-    lessons: group.lessons.map((lesson) => lesson.title)
+    lessons: group.lessons.map((lesson) => ({
+      ...lesson,
+      fullSlug: `${String(lesson.number).padStart(2, "0")}-${lesson.slug}`
+    }))
   }));
+}
+
+function buildLessonCatalog(groups) {
+  return groups.flatMap((group) =>
+    group.lessons.map((lesson) => ({
+      ...lesson,
+      group: group.group,
+      fullSlug: `${String(lesson.number).padStart(2, "0")}-${lesson.slug}`
+    }))
+  );
 }
 
 function getLocalizedContent(locale) {
@@ -576,7 +589,8 @@ function getLocalizedContent(locale) {
     repoRadar: isEnglish ? englishRepoRadar : repoRadar,
     features: isEnglish ? englishFeatures : codexFeatures,
     communityCards: isEnglish ? englishCommunityCards : communityCards,
-    tutorialParts: buildParts(groups, locale)
+    tutorialParts: buildParts(groups, locale),
+    lessonCatalog: buildLessonCatalog(groups)
   };
 }
 
@@ -603,7 +617,7 @@ export default function App() {
 }
 
 function CodexLearningHome({ content, locale, setLocale }) {
-  const { copy, features, tutorialParts, learningSteps: steps, repoRadar: repos, communityCards: cards } = content;
+  const { copy, features, lessonCatalog, learningSteps: steps, repoRadar: repos, communityCards: cards } = content;
 
   return (
     <div className="codex-shell">
@@ -703,17 +717,13 @@ function CodexLearningHome({ content, locale, setLocale }) {
             title={copy.curriculum.title}
             text={copy.curriculum.text}
           />
-          <div className="parts-grid">
-            {tutorialParts.map((part) => (
-              <a className="part-card" href={routePath(`/tutorial/${part.slug}.html`)} key={part.title}>
-                <span>{part.number}</span>
-                <h2>{part.title}</h2>
-                <p>{part.focus}</p>
-                <ul>
-                  {part.lessons.map((lesson) => (
-                    <li key={lesson}>{lesson}</li>
-                  ))}
-                </ul>
+          <div className="lesson-catalog-grid">
+            {lessonCatalog.map((lesson) => (
+              <a className="lesson-card" href={routePath(`/tutorial/${lesson.fullSlug}.html`)} key={lesson.fullSlug}>
+                <span>{String(lesson.number).padStart(2, "0")}</span>
+                <strong>{lesson.group}</strong>
+                <h2>{lesson.title}</h2>
+                <p>{lesson.summary}</p>
               </a>
             ))}
           </div>
@@ -844,7 +854,7 @@ function CodexHeader({ copy, locale, setLocale, current = "Codex" }) {
 }
 
 function CodexTutorialDetail({ content, locale, setLocale }) {
-  const { copy, docs, tutorialParts } = content;
+  const { copy, docs, lessonCatalog } = content;
   const slug = currentRoute().split("/").pop()?.replace(".html", "") || "01-codex-intro";
   const doc = docs.find((item) => item.slug === slug) || docs[0];
 
@@ -855,14 +865,14 @@ function CodexTutorialDetail({ content, locale, setLocale }) {
         <aside className="tutorial-sidebar" aria-label="Tutorial sections">
           <strong>{copy.tutorialSidebar}</strong>
           <nav>
-            {tutorialParts.map((part) => (
+            {lessonCatalog.map((lesson) => (
               <a
-                className={part.slug === doc.slug ? "active" : ""}
-                href={routePath(`/tutorial/${part.slug}.html`)}
-                key={part.title}
+                className={lesson.fullSlug === doc.slug ? "active" : ""}
+                href={routePath(`/tutorial/${lesson.fullSlug}.html`)}
+                key={lesson.fullSlug}
               >
-                <span>{part.number}</span>
-                {part.title}
+                <span>{String(lesson.number).padStart(2, "0")} · {lesson.group}</span>
+                {lesson.title}
               </a>
             ))}
           </nav>
