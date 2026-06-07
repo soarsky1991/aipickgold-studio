@@ -1231,16 +1231,17 @@ blockquote {
 
 .codex-shell {
   min-height: 100vh;
-  --codex-primary: #6366f1;
-  --codex-purple: #8b5cf6;
-  --codex-blue: #3b82f6;
-  --codex-soft: rgba(99, 102, 241, 0.1);
-  --codex-bg: #ffffff;
-  --codex-muted-bg: #f7f7f5;
+  --codex-primary: #177a3b;
+  --codex-gold: #d6a52f;
+  --codex-coral: #cf5c36;
+  --codex-soft: rgba(23, 122, 59, 0.1);
+  --codex-gold-soft: rgba(214, 165, 47, 0.16);
+  --codex-bg: #fffdf7;
+  --codex-muted-bg: #f6f5ed;
   --codex-text: #141413;
   --codex-muted: #73726c;
   --codex-border: rgba(31, 30, 29, 0.12);
-  --codex-gradient: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+  --codex-gradient: linear-gradient(135deg, #177a3b 0%, #d6a52f 100%);
   min-height: 100vh;
   background: var(--codex-bg);
 }
@@ -1276,10 +1277,10 @@ blockquote {
   place-items: center;
   border-radius: 9px;
   background: var(--codex-gradient);
-  color: white;
+  color: #101810;
   font-size: 13px;
   font-weight: 850;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 12px rgba(214, 165, 47, 0.32);
 }
 
 .codex-brand strong {
@@ -1488,6 +1489,101 @@ blockquote {
   white-space: nowrap;
 }
 
+.founder-signature {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr) minmax(340px, 0.95fr);
+  gap: 22px;
+  align-items: stretch;
+  padding: 28px;
+  border: 1px solid rgba(214, 165, 47, 0.34);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(23, 122, 59, 0.08), rgba(214, 165, 47, 0.16)),
+    #fffdf7;
+  box-shadow: 0 20px 50px rgba(49, 54, 38, 0.08);
+}
+
+.signature-mark {
+  min-height: 104px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(214, 165, 47, 0.46);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.9), transparent 34%),
+    linear-gradient(145deg, #d6a52f, #177a3b);
+}
+
+.signature-mark span {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #101810;
+  color: #f5d36b;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.signature-copy {
+  display: grid;
+  align-content: center;
+  gap: 9px;
+}
+
+.signature-copy > span {
+  color: var(--codex-primary);
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.signature-copy h2 {
+  max-width: 620px;
+  margin: 0;
+  color: var(--codex-text);
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.12;
+}
+
+.signature-copy p {
+  max-width: 660px;
+  margin: 0;
+  color: #4d4d47;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.signature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.signature-grid article {
+  min-height: 112px;
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  padding: 14px;
+  border: 1px solid var(--codex-border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.signature-grid strong {
+  color: var(--codex-primary);
+  font-size: 14px;
+}
+
+.signature-grid p {
+  margin: 0;
+  color: var(--codex-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
 .codex-section {
   scroll-margin-top: 84px;
   padding: 64px 0;
@@ -1567,6 +1663,13 @@ blockquote {
   border-radius: 14px;
   background: #ffffff;
   box-shadow: 0 12px 34px rgba(31, 30, 29, 0.05);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.part-card[href]:hover {
+  border-color: rgba(214, 165, 47, 0.58);
+  box-shadow: 0 18px 40px rgba(49, 54, 38, 0.09);
+  transform: translateY(-2px);
 }
 
 .part-card > span {
@@ -1641,7 +1744,8 @@ blockquote {
   font-size: 13px;
 }
 
-.tutorial-sidebar a:hover {
+.tutorial-sidebar a:hover,
+.tutorial-sidebar a.active {
   color: var(--codex-primary);
   background: var(--codex-soft);
 }
@@ -2143,6 +2247,14 @@ blockquote {
     padding-top: 24px;
   }
 
+  .founder-signature {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+
+  .signature-grid {
+    grid-column: 1 / -1;
+  }
+
   .codex-hero-stats,
   .path-grid,
   .feature-grid,
@@ -2426,6 +2538,20 @@ blockquote {
 
   .codex-hero-board {
     padding: 12px;
+  }
+
+  .founder-signature {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .signature-mark {
+    min-height: 86px;
+  }
+
+  .signature-grid {
+    grid-template-columns: 1fr;
   }
 
   .codex-hero-stats,

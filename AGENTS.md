@@ -4,7 +4,7 @@
 
 - Public website copy, README content, SEO metadata, GitHub issues, and Linear documents written for sharing must not reveal private strategy from chat.
 - Competitor names, benchmark targets, crawl targets, creator names, private screenshots, deployment credentials, server details, and user preferences are internal by default.
-- Do not publish phrases like "对标某某", "爬某某库", or "借某某网站".
+- Do not publish private benchmark targets, collection targets, or competitor-derived strategy.
 - Use neutral public wording: "公开事实源", "原创改写", "系统化课程结构", "来源许可边界", and "AI PickGold 自己的学习路线".
 - Unlicensed repositories and closed-source websites may inform internal research only; do not list them in public-facing source cards or copy their code/text.
 - Never commit secrets, tokens, cookies, SSH keys, OSS credentials, DNS credentials, or private env paths.

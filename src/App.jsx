@@ -322,16 +322,25 @@ const viralBreakdown = [
   { label: "二次创作", text: "每篇爆款都转成清单、仓库链接、练习任务和发布包。" }
 ];
 
+const brandPillars = [
+  ["拾金笔记", "把工具、教程和真实发布流程沉淀成长期可复用的个人知识资产。"],
+  ["创作者视角", "不只教编程，还教如何用 Codex 产出文章、卡片、脚本和交付包。"],
+  ["安全门禁", "密钥、账号、生产发布和公开内容都先过边界检查。"],
+  ["可交付路线", "每一章都落到提示词、检查清单、仓库链接和可验证输出。"]
+];
+
 const tutorialParts = [
   {
     number: "第 1 部分",
     title: "基础入门",
+    slug: "1-codex-intro",
     focus: "Codex 是什么、使用形态、工具对比、第一条任务",
     lessons: ["Codex 是什么", "四种入口", "适合与不适合", "账号认证"]
   },
   {
     number: "第 2 部分",
     title: "桌面端入门",
+    slug: "2-desktop-setup",
     focus: "Codex App、Local / Worktree / Cloud、多线程与命令菜单",
     lessons: ["安装登录", "界面总览", "多线程并行", "快捷命令"]
   },
@@ -368,6 +377,7 @@ const tutorialParts = [
   {
     number: "第 8 部分",
     title: "扩展能力",
+    slug: "8-agents-skills",
     focus: "AGENTS.md、Skills、MCP、插件中文速查",
     lessons: ["AGENTS.md", "Skills", "MCP", "插件管理"]
   },
@@ -427,6 +437,136 @@ const codexFeatures = [
     icon: "☁️",
     title: "可自动化",
     text: "用 codex exec、GitHub Action、SDK 和云端任务做长期流程。"
+  }
+];
+
+const tutorialDocs = [
+  {
+    slug: "1-codex-intro",
+    kicker: "从这里开始",
+    title: "Codex 是什么",
+    summary:
+      "Codex 是 OpenAI 面向软件开发的 coding agent。它会读取文件、执行命令、修改代码，并把结果交给你 review。",
+    map: ["readProjectContext()", "editFilesWithApproval()", "runVerification()"],
+    sections: [
+      {
+        title: "Codex 不是什么",
+        cards: [
+          ["不是补全工具", "它不只在光标处给建议，而是会拆解任务、执行命令、检查结果。"],
+          ["不是纯聊天机器人", "它会真实读写文件、调用工具和浏览器，而不是只输出文字。"],
+          ["不是无人值守替代品", "所有高风险动作仍需要权限、审批、测试和人工判断。"]
+        ]
+      },
+      {
+        title: "最适合先学的 4 件事",
+        list: [
+          "用桌面端 App 创建一个项目，并让 Codex 只读扫描目录。",
+          "写一份 AGENTS.md，告诉 Codex 如何运行测试和交付结果。",
+          "让 Codex 完成一个小改动，并检查 diff 与命令输出。",
+          "把一次重复工作沉淀成 Skill 或发布包模板。"
+        ]
+      },
+      {
+        title: "第一条安全提示词",
+        code:
+          "请先只读检查这个项目，告诉我技术栈、目录结构、启动方式、测试命令和风险点。\n不要修改文件。最后建议一个可以安全完成的小任务，等我确认后再执行。"
+      }
+    ]
+  },
+  {
+    slug: "2-desktop-setup",
+    kicker: "桌面端主线",
+    title: "用 Codex App 建立第一个工作区",
+    summary:
+      "桌面端适合中文用户把本地仓库、浏览器预览、GitHub、Linear 和设计工具放进同一个工作流。",
+    map: ["openWorkspace()", "scanWithoutEditing()", "verifyInBrowser()"],
+    sections: [
+      {
+        title: "第一次打开先做什么",
+        list: [
+          "选择一个没有生产密钥的小项目作为练习仓库。",
+          "确认 Codex 能看到 README、package.json、测试命令和主要源码目录。",
+          "先要求只读总结项目，不要立刻改文件。",
+          "把常用命令和禁止触碰的目录写入 AGENTS.md。"
+        ]
+      },
+      {
+        title: "本地、Worktree、Cloud 怎么选",
+        cards: [
+          ["Local", "适合需要本地预览、调试、浏览器验收的任务。"],
+          ["Worktree", "适合并行做多个功能，保持每条线都有独立 diff。"],
+          ["Cloud", "适合 Issue 到 PR 的远程执行，但要先确认仓库权限。"]
+        ]
+      },
+      {
+        title: "桌面端练习任务",
+        code:
+          "请用只读方式扫描当前项目，列出入口文件、启动命令、构建命令和潜在风险。\n然后提出 3 个适合新手练习的小任务，不要修改文件。"
+      }
+    ]
+  },
+  {
+    slug: "3-agents-context",
+    kicker: "项目上下文",
+    title: "写一份让 Codex 真正懂项目的 AGENTS.md",
+    summary:
+      "AGENTS.md 是项目给 Codex 的工作说明书。它把命令、边界、风格和验收标准写成可复用上下文。",
+    map: ["defineCommands()", "setBoundaries()", "recordAcceptance()"],
+    sections: [
+      {
+        title: "AGENTS.md 至少写什么",
+        list: [
+          "项目目标：这个仓库解决什么问题。",
+          "常用命令：安装、开发、构建、测试、预览。",
+          "编辑边界：哪些目录可以改，哪些文件不能碰。",
+          "验收标准：什么算完成，必须跑哪些检查。"
+        ]
+      },
+      {
+        title: "公开内容边界",
+        cards: [
+          ["内部策略不公开", "竞品、抓取目标、私密对话和商业判断不写进公开文档。"],
+          ["许可先行", "来源不清楚的内容只做内部研究，不进入公开源码和页面。"],
+          ["密钥零容忍", "token、SSH、OSS、DNS、env 路径都不能提交。"]
+        ]
+      },
+      {
+        title: "AGENTS.md 模板",
+        code:
+          "# Project Rules\n\n- Run `npm run build` before publishing.\n- Do not edit deployment secrets or env files.\n- Public copy must not reveal private benchmark targets or crawl targets.\n- Verify mobile width around 390px before final handoff."
+      }
+    ]
+  },
+  {
+    slug: "8-agents-skills",
+    kicker: "扩展能力",
+    title: "把重复工作流沉淀成 Skills",
+    summary:
+      "Skills 适合把重复出现的研究、写作、测试、发布和验收步骤固化，让 Codex 每次按同一套方法工作。",
+    map: ["captureWorkflow()", "writeSkill()", "reuseSafely()"],
+    sections: [
+      {
+        title: "什么任务适合做成 Skill",
+        list: [
+          "每周都会重复的资料整理、教程更新或发布包制作。",
+          "需要固定安全边界的部署、账号、密钥相关流程。",
+          "需要稳定输出格式的报告、清单、PR 描述和验收记录。"
+        ]
+      },
+      {
+        title: "Skill 不是万能脚本",
+        cards: [
+          ["先写边界", "明确哪些内容能公开，哪些只能内部使用。"],
+          ["再写步骤", "步骤要短、可执行、能被验证。"],
+          ["最后写验收", "让 Codex 知道什么时候该停、什么时候该交付。"]
+        ]
+      },
+      {
+        title: "内容生产 Skill 提示",
+        code:
+          "请把这篇教程改写成：公众号大纲、小红书卡片提纲、X 线程和视频脚本。\n保留人工审核清单，不自动发布，不暴露内部来源策略。"
+      }
+    ]
   }
 ];
 
@@ -647,6 +787,28 @@ function CodexLearningHome() {
           </div>
         </section>
 
+        <section className="codex-section founder-signature" aria-label="AI PickGold brand signature">
+          <div className="signature-mark" aria-hidden="true">
+            <span>Au</span>
+          </div>
+          <div className="signature-copy">
+            <span>High Soar · 宸的拾金笔记</span>
+            <h2>把 Codex 学成一套能交付、能发布、能复盘的工作流。</h2>
+            <p>
+              AI PickGold 的教程不追求堆概念，而是把真实项目接管、公开内容边界、创作者发布包和
+              GitHub 自动化串成一条路线。绿色代表执行，金色代表从信息里拾出可复用的价值。
+            </p>
+          </div>
+          <div className="signature-grid">
+            {brandPillars.map(([title, text]) => (
+              <article key={title}>
+                <strong>{title}</strong>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <section className="codex-section codex-features">
           <SectionIntro
             label="Why Codex"
@@ -672,7 +834,7 @@ function CodexLearningHome() {
           />
           <div className="parts-grid">
             {tutorialParts.map((part) => (
-              <article className="part-card" key={part.title}>
+              <a className="part-card" href={part.slug ? routePath(`/tutorial/${part.slug}.html`) : "#parts"} key={part.title}>
                 <span>{part.number}</span>
                 <h2>{part.title}</h2>
                 <p>{part.focus}</p>
@@ -681,7 +843,7 @@ function CodexLearningHome() {
                     <li key={lesson}>{lesson}</li>
                   ))}
                 </ul>
-              </article>
+              </a>
             ))}
           </div>
         </section>
@@ -805,6 +967,9 @@ function CodexHeader() {
 }
 
 function CodexTutorialDetail() {
+  const slug = currentRoute().split("/").pop()?.replace(".html", "") || "1-codex-intro";
+  const doc = tutorialDocs.find((item) => item.slug === slug) || tutorialDocs[0];
+
   return (
     <div className="codex-shell">
       <CodexHeader />
@@ -813,7 +978,11 @@ function CodexTutorialDetail() {
           <strong>完整目录</strong>
           <nav>
             {tutorialParts.map((part) => (
-              <a href={part.number === "第 1 部分" ? routePath("/tutorial/1-codex-intro.html") : "#parts"} key={part.title}>
+              <a
+                className={part.slug === doc.slug ? "active" : ""}
+                href={part.slug ? routePath(`/tutorial/${part.slug}.html`) : routePath("/codex#parts")}
+                key={part.title}
+              >
                 <span>{part.number}</span>
                 {part.title}
               </a>
@@ -824,12 +993,9 @@ function CodexTutorialDetail() {
         <article className="tutorial-article">
           <section className="tutorial-doc-hero">
             <div>
-              <span>从这里开始</span>
-              <h1>Codex 是什么</h1>
-              <p>
-                Codex 是 OpenAI 面向软件开发的 coding agent。它会读取文件、执行命令、修改代码，
-                并通过多轮工具调用完成真实任务。本教程把桌面端 App 作为主线，把 CLI、IDE、Cloud 作为补充。
-              </p>
+              <span>{doc.kicker}</span>
+              <h1>{doc.title}</h1>
+              <p>{doc.summary}</p>
               <div className="codex-actions">
                 <a className="primary-action" href={routePath("/codex")}>
                   <LayoutPanelLeft size={16} />
@@ -863,42 +1029,44 @@ function CodexTutorialDetail() {
                   <div className="map-line" />
                   <div className="map-line short" />
                   <div className="diff-preview">
-                    <p><strong>+</strong> readProjectContext()</p>
-                    <p><strong>+</strong> editFilesWithApproval()</p>
-                    <p><strong>+</strong> runVerification()</p>
+                    {doc.map.map((item) => (
+                      <p key={item}><strong>+</strong> {item}</p>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="tutorial-doc-section">
-            <h2>Codex 不是什么</h2>
-            <div className="tutorial-info-grid">
-              <InfoCard title="不是补全工具" text="它不只在光标处给建议，而是会拆解任务、执行命令、检查结果。" />
-              <InfoCard title="不是纯聊天机器人" text="它会真实读写文件、调用工具和浏览器，而不是只输出文字。" />
-              <InfoCard title="不是无人值守替代品" text="所有高风险动作仍需要权限、审批、测试和人工判断。" />
-            </div>
-          </section>
-
-          <section className="tutorial-doc-section">
-            <h2>最适合先学的 4 件事</h2>
-            <ol>
-              <li>用桌面端 App 创建一个项目，并让 Codex 只读扫描目录。</li>
-              <li>写一份 AGENTS.md，告诉 Codex 如何运行测试和交付结果。</li>
-              <li>让 Codex 完成一个小改动，并检查 diff 与命令输出。</li>
-              <li>把一次重复工作沉淀成 Skill 或发布包模板。</li>
-            </ol>
-          </section>
-
-          <section className="tutorial-doc-section">
-            <h2>第一条安全提示词</h2>
-            <pre>{`请先只读检查这个项目，告诉我技术栈、目录结构、启动方式、测试命令和风险点。
-不要修改文件。最后建议一个可以安全完成的小任务，等我确认后再执行。`}</pre>
-          </section>
+          {doc.sections.map((section) => (
+            <TutorialSection section={section} key={section.title} />
+          ))}
         </article>
       </main>
     </div>
+  );
+}
+
+function TutorialSection({ section }) {
+  return (
+    <section className="tutorial-doc-section">
+      <h2>{section.title}</h2>
+      {section.cards ? (
+        <div className="tutorial-info-grid">
+          {section.cards.map(([title, text]) => (
+            <InfoCard title={title} text={text} key={title} />
+          ))}
+        </div>
+      ) : null}
+      {section.list ? (
+        <ol>
+          {section.list.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ol>
+      ) : null}
+      {section.code ? <pre>{section.code}</pre> : null}
+    </section>
   );
 }
 
