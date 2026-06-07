@@ -3,10 +3,14 @@ import JSZip from "jszip";
 import {
   AlertTriangle,
   Archive,
+  AppWindow,
   Boxes,
+  Brain,
+  Cable,
   Check,
   CheckCircle2,
   ChevronDown,
+  Cloud,
   Clipboard,
   Code2,
   Copy,
@@ -23,12 +27,14 @@ import {
   PackageCheck,
   PenLine,
   PlaySquare,
+  QrCode,
   RefreshCw,
   ShieldCheck,
   Sparkles,
   Target,
   UserRound,
-  X
+  X,
+  Zap
 } from "lucide-react";
 
 const initialMarkdown = `# 如何用一篇内容打造多平台影响力
@@ -440,32 +446,38 @@ const tutorialParts = [
 
 const codexFeatures = [
   {
-    icon: "🖥️",
+    icon: AppWindow,
+    symbol: "app.window",
     title: "桌面端主线",
     text: "用 Codex App 管多项目、多线程、本地预览、插件和云端任务。"
   },
   {
-    icon: "🧠",
+    icon: Brain,
+    symbol: "brain",
     title: "真正执行",
     text: "不是只聊天，而是读文件、改代码、运行命令、给出可审查 diff。"
   },
   {
-    icon: "🔌",
+    icon: Cable,
+    symbol: "cable.connector",
     title: "MCP 与插件",
     text: "把浏览器、GitHub、Linear、Figma、文档和内部工具接进工作流。"
   },
   {
-    icon: "⚡",
+    icon: Zap,
+    symbol: "bolt",
     title: "Skills 固化",
     text: "把重复工作流做成 Skill，让教程不止能看，还能被 Codex 调用。"
   },
   {
-    icon: "🛡️",
+    icon: ShieldCheck,
+    symbol: "checkmark.shield",
     title: "权限可控",
     text: "用 Sandbox、Approval、Rules、Hooks 和人工确认守住风险边界。"
   },
   {
-    icon: "☁️",
+    icon: Cloud,
+    symbol: "icloud",
     title: "可自动化",
     text: "用 codex exec、GitHub Action、SDK 和云端任务做长期流程。"
   }
@@ -1128,13 +1140,18 @@ function CodexLearningHome() {
             text="OpenAI 出品的 coding agent，桌面端、CLI、IDE、Cloud 一套到底；教程站要讲到能上手。"
           />
           <div className="feature-grid">
-            {codexFeatures.map((feature) => (
-              <article className="codex-feature-card" key={feature.title}>
-                <span>{feature.icon}</span>
-                <h2>{feature.title}</h2>
-                <p>{feature.text}</p>
-              </article>
-            ))}
+            {codexFeatures.map((feature) => {
+              const Icon = feature.icon;
+              return (
+                <article className="codex-feature-card" key={feature.title}>
+                  <span className="sf-symbol" aria-label={feature.symbol} title={feature.symbol}>
+                    <Icon size={22} strokeWidth={1.8} />
+                  </span>
+                  <h2>{feature.title}</h2>
+                  <p>{feature.text}</p>
+                </article>
+              );
+            })}
           </div>
         </section>
 
@@ -1266,7 +1283,9 @@ function CodexLearningHome() {
                   <span />
                   <span />
                   <span />
-                  <strong>QR</strong>
+                  <strong>
+                    <QrCode size={30} strokeWidth={1.7} />
+                  </strong>
                 </div>
                 <div>
                   <span>{item.label}</span>
@@ -1761,11 +1780,15 @@ function FounderPage() {
           <div className="founder-qr-row" aria-label="Founder learning QR placeholders">
             <div className="founder-mini-qr">
               <span>小红书</span>
-              <strong>QR</strong>
+              <strong>
+                <QrCode size={26} strokeWidth={1.7} />
+              </strong>
             </div>
             <div className="founder-mini-qr">
               <span>学习群</span>
-              <strong>QR</strong>
+              <strong>
+                <QrCode size={26} strokeWidth={1.7} />
+              </strong>
             </div>
           </div>
         </section>
