@@ -170,6 +170,33 @@ const publicTutorialParts = codexLessonGroups.map((group, groupIndex) => ({
   lessons: group.lessons.map((lesson) => lesson.title)
 }));
 
+const communityCards = [
+  {
+    title: "小红书",
+    label: "宸的 AI 复盘室",
+    image: "/community/xiaohongshu-qr.jpg",
+    imageClass: "square",
+    alt: "宸的 AI 复盘室小红书二维码",
+    text: "关注小红书，查看 Codex 学习笔记、实战复盘和工具使用记录。"
+  },
+  {
+    title: "智辰个人微信",
+    label: "添加好友",
+    image: "/community/wechat-zhichen-qr-square.jpg",
+    imageClass: "square",
+    alt: "智辰个人微信二维码",
+    text: "添加智辰微信，交流 Codex 学习路径、项目实践和自动化工作流。"
+  },
+  {
+    title: "Codex 学习群",
+    label: "扫码入群",
+    image: "/community/codex-learning-group-qr.jpg",
+    imageClass: "square",
+    alt: "Codex 学习群二维码",
+    text: "加入 Codex 学习群，跟着课程节奏完成练习、提问和复盘。"
+  }
+];
+
 export default function App() {
   const route = currentRoute();
 
@@ -315,6 +342,28 @@ function CodexLearningHome() {
                   <strong>{step.output}</strong>
                 </div>
                 <em>{step.time}</em>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="codex-section community-section" id="learn-with-me">
+          <SectionIntro
+            label="Study together"
+            title="跟着我学 Codex"
+            text="课程更新、实战复盘和学习交流都会放在这三个入口里。"
+          />
+          <div className="community-grid">
+            {communityCards.map((card) => (
+              <article className="community-card" key={card.title}>
+                <div className={`community-image ${card.imageClass}`}>
+                  <img src={routePath(card.image)} alt={card.alt} loading="lazy" />
+                </div>
+                <div className="community-copy">
+                  <span>{card.label}</span>
+                  <h2>{card.title}</h2>
+                  <p>{card.text}</p>
+                </div>
               </article>
             ))}
           </div>
