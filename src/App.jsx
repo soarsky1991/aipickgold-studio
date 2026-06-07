@@ -1113,7 +1113,7 @@ function CodexLearningHome() {
 
         <section className="codex-section founder-signature" aria-label="AI PickGold brand signature">
           <div className="signature-mark" aria-hidden="true">
-            <span>Au</span>
+            <img src={founderAssets.avatar} alt="" />
           </div>
           <div className="signature-copy">
             <span>High Soar · 宸的拾金笔记</span>
@@ -1305,7 +1305,9 @@ function CodexHeader({ current = "Codex" }) {
   return (
     <header className="codex-header">
       <a className="codex-brand" href={routePath("/codex")}>
-        <span>Au</span>
+        <span>
+          <img src={founderAssets.avatar} alt="智辰老师" />
+        </span>
         <strong>AI PickGold</strong>
       </a>
       <nav className="codex-nav" aria-label="Codex tutorial navigation">
