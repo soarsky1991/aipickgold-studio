@@ -143,13 +143,8 @@ const platformTabs = [
 ];
 
 const navItems = [
-  { label: "Codex Lab", path: "/codex" },
-  { label: "Studio Desk", path: "/studio" },
-  { label: "Founder IP", path: "/founder" },
-  { label: "WxMD", path: "/wxmd" },
-  { label: "CardMD", path: "/cardmd" },
-  { label: "Skills", path: "/skills" },
-  { label: "API", path: "/api" }
+  { label: "Codex", path: "/codex" },
+  { label: "Founder IP", path: "/founder" }
 ];
 
 const basePath = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
@@ -170,7 +165,7 @@ function currentRoute() {
 
 const md2wechatSignals = [
   "Credentialed draft APIs stay behind server-side gates.",
-  "WeChat draft creation requires AppId, App Secret, API key, and IP whitelist.",
+  "WeChat draft creation requires account credentials, server isolation, and IP whitelist.",
   "V1 Studio exports a manual package before direct account actions."
 ];
 
@@ -239,18 +234,6 @@ const repoRadar = [
     learningUse: "作为所有教程结论的第一事实源。"
   },
   {
-    name: "leigegehaha/codex-chinese-tutorial",
-    url: "https://github.com/leigegehaha/codex-chinese-tutorial",
-    kind: "中文教程",
-    language: "中文",
-    stars: "18",
-    license: "Apache-2.0",
-    updatedAt: "2026-06-04",
-    reuseMode: "中文结构种子，重写文案",
-    summary: "面向新手的 Codex 中文教程，覆盖 CLI、桌面端、Skills、插件和自动化工作流。",
-    learningUse: "抽取中文学习路径和章节顺序，改写为 AI PickGold 实战清单。"
-  },
-  {
     name: "openai/skills",
     url: "https://github.com/openai/skills",
     kind: "官方 Skills 目录",
@@ -274,18 +257,6 @@ const repoRadar = [
     summary: "Codex Action 示例，适合把仓库检查、PR 辅助和沙盒保护接进 GitHub。",
     learningUse: "作为自动化章节和执行模板来源。"
   },
-  {
-    name: "ComposioHQ/awesome-codex-skills",
-    url: "https://github.com/ComposioHQ/awesome-codex-skills",
-    kind: "生态目录",
-    language: "English",
-    stars: "13.1k",
-    license: "未声明",
-    updatedAt: "2026-06-07",
-    reuseMode: "仅作目录参考",
-    summary: "社区 Codex Skills 资源目录，适合观察热门 Skill 分类与生态词汇。",
-    learningUse: "只做选题雷达，不直接复制代码或文案。"
-  }
 ];
 
 const practicePacks = [
@@ -311,7 +282,7 @@ const practicePacks = [
     title: "AI PickGold 内容生产包",
     audience: "用 Codex 写教程、做卡片、发公众号的创作者",
     deliverable: "Markdown 主稿、XHS 卡片、X 线程、视频脚本、手动发布包",
-    source: "Studio Desk + WxMD/CardMD"
+    source: "AI PickGold 内容工作流"
   }
 ];
 
@@ -327,6 +298,19 @@ const brandPillars = [
   ["创作者视角", "不只教编程，还教如何用 Codex 产出文章、卡片、脚本和交付包。"],
   ["安全门禁", "密钥、账号、生产发布和公开内容都先过边界检查。"],
   ["可交付路线", "每一章都落到提示词、检查清单、仓库链接和可验证输出。"]
+];
+
+const privateCommunity = [
+  {
+    title: "小红书",
+    label: "二维码占位",
+    text: "后续放小红书账号二维码，用于承接教程笔记、卡片版清单和日常更新。"
+  },
+  {
+    title: "微信群",
+    label: "二维码占位",
+    text: "后续放微信群二维码，用于承接学习打卡、问题答疑和案例共创。"
+  }
 ];
 
 const tutorialParts = [
@@ -525,7 +509,7 @@ const tutorialDocs = [
       {
         title: "公开内容边界",
         cards: [
-          ["内部策略不公开", "竞品、抓取目标、私密对话和商业判断不写进公开文档。"],
+          ["内部策略不公开", "外部研究对象、采集目标、私密对话和商业判断不写进公开文档。"],
           ["许可先行", "来源不清楚的内容只做内部研究，不进入公开源码和页面。"],
           ["密钥零容忍", "token、SSH、OSS、DNS、env 路径都不能提交。"]
         ]
@@ -533,7 +517,7 @@ const tutorialDocs = [
       {
         title: "AGENTS.md 模板",
         code:
-          "# Project Rules\n\n- Run `npm run build` before publishing.\n- Do not edit deployment secrets or env files.\n- Public copy must not reveal private benchmark targets or crawl targets.\n- Verify mobile width around 390px before final handoff."
+          "# Project Rules\n\n- Run `npm run build` before publishing.\n- Do not edit deployment secrets or env files.\n- Public copy must not reveal private research targets or collection targets.\n- Verify mobile width around 390px before final handoff."
       }
     ]
   },
@@ -771,18 +755,39 @@ function CodexLearningHome() {
           </div>
 
           <div className="codex-hero-board" aria-label="Codex source board">
-            <div className="board-title">
-              <span>source standard</span>
-              <strong>公开来源校验，改写成 AI PickGold 版本</strong>
+            <div className="command-deck">
+              <div className="deck-topbar">
+                <span />
+                <span />
+                <span />
+                <strong>AI PickGold Command Deck</strong>
+              </div>
+              <div className="deck-body">
+                <div className="deck-route">
+                  <span>today</span>
+                  <strong>把一个项目交给 Codex 前，先建立上下文和边界。</strong>
+                </div>
+                <div className="deck-line">
+                  <span>01</span>
+                  <p>扫描项目结构、命令和风险</p>
+                  <em>Read-only</em>
+                </div>
+                <div className="deck-line">
+                  <span>02</span>
+                  <p>写入 AGENTS.md 与公开内容门禁</p>
+                  <em>Context</em>
+                </div>
+                <div className="deck-line active">
+                  <span>03</span>
+                  <p>产出教程、卡片、脚本和发布包</p>
+                  <em>Ship</em>
+                </div>
+              </div>
             </div>
-            <div className="source-stack">
-              {repoRadar.slice(0, 3).map((repo) => (
-                <a className="source-row" href={repo.url} key={repo.name}>
-                  <span>{repo.kind}</span>
-                  <strong>{repo.name}</strong>
-                  <em>{repo.license}</em>
-                </a>
-              ))}
+            <div className="deck-footer">
+              <span>绿色 = 执行</span>
+              <span>金色 = 拾取价值</span>
+              <span>黑色 = 安全边界</span>
             </div>
           </div>
         </section>
@@ -873,7 +878,7 @@ function CodexLearningHome() {
           <SectionIntro
             label="Repository radar"
             title="公开来源雷达"
-            text="所有公开来源都标注许可、用途和复用边界；许可不明确的内容不进入公开素材。"
+            text="公开来源只展示官方来源、AI PickGold 自有仓库，以及你明确允许公开的非外部研究对象。"
             id="repo-radar-title"
           />
           <div className="repo-table" role="table" aria-label="Codex repository radar">
@@ -940,6 +945,31 @@ function CodexLearningHome() {
             ))}
           </div>
         </section>
+
+        <section className="codex-section private-community" id="private-community" aria-label="AI PickGold private community">
+          <SectionIntro
+            label="Community"
+            title="把学习流量接回 AI PickGold 私域"
+            text="教程负责建立信任，私域负责持续陪跑。这里预留二维码位，后续直接替换成真实图片。"
+          />
+          <div className="qr-grid">
+            {privateCommunity.map((item) => (
+              <article className="qr-card" key={item.title}>
+                <div className="qr-placeholder" aria-label={`${item.title} ${item.label}`}>
+                  <span />
+                  <span />
+                  <span />
+                  <strong>QR</strong>
+                </div>
+                <div>
+                  <span>{item.label}</span>
+                  <h2>{item.title}</h2>
+                  <p>{item.text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
       </main>
     </div>
   );
@@ -949,18 +979,22 @@ function CodexHeader() {
   return (
     <header className="codex-header">
       <a className="codex-brand" href={routePath("/codex")}>
-        <span>Cx</span>
-        <strong>Codex 深度教程</strong>
+        <span>Au</span>
+        <strong>AI PickGold</strong>
       </a>
       <nav className="codex-nav" aria-label="Codex tutorial navigation">
-        <a className="active" href={routePath("/codex")}>首页</a>
-        <a href={routePath("/tutorial/1-codex-intro.html")}>教程</a>
-        <a href="https://developers.openai.com/codex" target="_blank" rel="noreferrer">官方文档</a>
-        <a href="https://github.com/soarsky1991/aipickgold-codex-tutorial" target="_blank" rel="noreferrer">学习仓库</a>
-        <a href={routePath("/studio")}>Studio Desk</a>
+        {navItems.map((item) => (
+          <a
+            className={item.label === "Codex" ? "active" : ""}
+            href={routePath(item.path)}
+            key={item.label}
+          >
+            {item.label}
+          </a>
+        ))}
       </nav>
       <a className="codex-header-action" href="https://github.com/soarsky1991/aipickgold-codex-tutorial" target="_blank" rel="noreferrer">
-        GitHub
+        学习仓库
       </a>
     </header>
   );
@@ -1172,8 +1206,8 @@ function StudioApp() {
 
   return (
     <div className="studio-shell">
-      <Header packageStatus={packageStatus} current="Studio Desk" />
-      <main className="studio-main" aria-label="AI PickGold Studio Desk">
+      <Header packageStatus={packageStatus} current="Workspace Lab" />
+      <main className="studio-main" aria-label="AI PickGold Workspace Lab">
         <section className="workspace-title">
           <div>
             <p className="muted small">/studio · V2 direction</p>
@@ -1253,15 +1287,15 @@ function StudioApp() {
   );
 }
 
-function Header({ packageStatus = "ready", current = "Studio Desk" }) {
+function Header({ packageStatus = "ready", current = "Workspace Lab" }) {
   return (
     <header className="topbar">
       <div className="brand-lockup">
         <div className="mark">
           <Sparkles size={18} />
         </div>
-        <strong>AI PickGold Studio</strong>
-        <span className="version">V1</span>
+        <strong>AI PickGold</strong>
+        <span className="version">Codex</span>
       </div>
       <nav className="product-switcher" aria-label="Product switcher">
         {navItems.map((item) => (
@@ -1279,10 +1313,6 @@ function Header({ packageStatus = "ready", current = "Studio Desk" }) {
           <ShieldCheck size={14} />
           Pro
           <strong>••••••</strong>
-        </span>
-        <span className="status-pill">
-          <KeyRound size={14} />
-          API key: sk-...9A2
         </span>
         <span className="package-state">{packageStatus}</span>
       </div>
@@ -1320,16 +1350,16 @@ function FounderPage() {
               可交付、可变现。
             </h1>
             <p>
-              AI PickGold Studio 不是展示 AI 魔法，而是把内容生产、风险审查、多平台分发和商业化包装变成一套可运营的工作台。
+              AI PickGold 不是展示 AI 魔法，而是把 Codex 学习、内容生产、风险审查和个人 IP 交付变成一套可运营的系统。
             </p>
             <div className="founder-actions">
-              <a className="primary-action" href={routePath("/studio")}>
+              <a className="primary-action" href={routePath("/codex")}>
                 <LayoutPanelLeft size={16} />
-                Open Studio Desk
+                查看 Codex 路线
               </a>
-              <a className="secondary-link" href="https://github.com/soarsky1991/aipickgold-studio">
+              <a className="secondary-link" href={routePath("/codex#private-community")}>
                 <Globe2 size={16} />
-                GitHub project
+                私域交流入口
               </a>
             </div>
           </div>
@@ -1341,13 +1371,53 @@ function FounderPage() {
             </div>
             <div>
               <span>Proof assets</span>
-              <p>WxMD、CardMD、Studio package、md2wechat benchmark、Figma prototype、Linear delivery loop</p>
+              <p>Codex 教程、AI PickGold 内容包、Figma prototype、GitHub 仓库、Linear delivery loop</p>
             </div>
             <div>
               <span>Boundary</span>
-              <p>生成、审查、导出、交付；账号发布和密钥调用保持人工/服务端控制。</p>
+              <p>生成、审查、导出、交付；账号发布、私密资料和上线动作保持人工确认。</p>
             </div>
           </aside>
+        </section>
+
+        <section className="founder-visuals" aria-label="Founder IP visual system">
+          <article className="photo-card portrait-card">
+            <div className="photo-placeholder">
+              <UserRound size={46} />
+              <span>个人 IP 主视觉照</span>
+            </div>
+            <div>
+              <span>Portrait</span>
+              <h2>一张能被反复使用的“Codex 导师”主视觉。</h2>
+              <p>预留头像、半身照或工作照位置，后续用于首页、公众号、小红书封面和课程页统一露出。</p>
+            </div>
+          </article>
+
+          <article className="photo-card desk-shot">
+            <div className="desk-visual" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
+            <div>
+              <span>Workspace</span>
+              <h2>把真实工作流做成视觉资产。</h2>
+              <p>展示 Codex、仓库、教程、发布包和验收清单，让个人 IP 看起来像一个可靠系统。</p>
+            </div>
+          </article>
+
+          <article className="photo-card proof-shot">
+            <div className="proof-stack" aria-hidden="true">
+              <span>教程</span>
+              <span>清单</span>
+              <span>案例</span>
+            </div>
+            <div>
+              <span>Proof Wall</span>
+              <h2>证明不是靠口号，而是靠可交付证据。</h2>
+              <p>后续可放 GitHub 更新、课程目录、读者反馈、交付截图和社群打卡成果。</p>
+            </div>
+          </article>
         </section>
 
         <section className="founder-grid">
@@ -1357,15 +1427,15 @@ function FounderPage() {
           />
           <FounderBlock
             title="我解决什么"
-            body="从一篇草稿开始，拆成平台化输出、审查清单、导出包、复盘入口和后续 API/自动化能力。"
+            body="从一篇草稿或一个项目开始，拆成学习路径、平台化输出、审查清单、导出包和复盘入口。"
           />
           <FounderBlock
             title="我怎么商业化"
-            body="免费工作台建立信任；高级版销售发布包历史、团队协作、API 托管、私有化配置和顾问式搭建。"
+            body="免费教程建立信任；高级版承接陪跑、团队协作、私有流程配置和顾问式搭建。"
           />
           <FounderBlock
             title="我为什么可信"
-            body="我把 brief、设计、工程、上线、Figma、Linear、竞品 API 测试和交付证据放在同一个可追踪闭环里。"
+            body="我把 brief、设计、工程、上线、Figma、Linear 和交付证据放在同一个可追踪闭环里。"
           />
         </section>
 
@@ -1383,15 +1453,15 @@ function FounderPage() {
             />
             <FounderOffer
               icon={LayoutPanelLeft}
-              title="内容发布工作台搭建"
+              title="内容工作流搭建"
               audience="适合个人 IP、知识创作者和小团队。"
               deliverable="交付草稿入口、平台输出、审查清单、导出包。"
             />
             <FounderOffer
               icon={KeyRound}
-              title="高级版 API 落地"
-              audience="适合要接入 md2wechat、私有密钥和团队协作的业务。"
-              deliverable="交付服务端调用边界、密钥隔离、人工发布门禁。"
+              title="自动化边界规划"
+              audience="适合未来要接入团队协作、私有流程和自动化能力的业务。"
+              deliverable="交付权限分层、人工门禁、上线前检查清单。"
             />
           </div>
         </section>
@@ -1399,12 +1469,12 @@ function FounderPage() {
         <section className="offer-band">
           <div>
             <p className="muted small">Current offer</p>
-            <h2>把你的内容流程做成一个可展示、可复用、可交付的 AI 工作台。</h2>
+            <h2>把你的 Codex 学习和内容流程做成一个可展示、可复用、可交付的 AI 系统。</h2>
           </div>
           <div className="offer-actions">
-            <a className="primary-action" href={routePath("/studio")}>
+            <a className="primary-action" href={routePath("/codex")}>
               <PackageCheck size={16} />
-              See the product
+              See Codex path
             </a>
             <a
               className="secondary-link"
