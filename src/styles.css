@@ -1862,7 +1862,7 @@ blockquote {
   z-index: 40;
   height: 60px;
   display: grid;
-  grid-template-columns: minmax(210px, 0.8fr) minmax(420px, 1.4fr) auto;
+  grid-template-columns: minmax(210px, 0.75fr) minmax(320px, 1.2fr) auto;
   align-items: center;
   gap: 18px;
   padding: 0 24px;
@@ -1934,6 +1934,42 @@ blockquote {
   border: 1px solid var(--codex-border);
   background: var(--codex-muted-bg);
   color: var(--codex-text);
+}
+
+.codex-header-tools {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--codex-border);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.language-switch button {
+  min-width: 42px;
+  height: 30px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--codex-muted);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.language-switch button.active {
+  color: var(--codex-primary);
+  background: var(--codex-soft);
 }
 
 .codex-home {
@@ -3253,6 +3289,11 @@ blockquote {
 
   .codex-nav::-webkit-scrollbar {
     display: none;
+  }
+
+  .codex-header-tools {
+    justify-content: space-between;
+    width: 100%;
   }
 
   .codex-header-action {

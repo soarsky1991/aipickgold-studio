@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from "react";
 import {
   AppWindow,
   Brain,
@@ -11,6 +12,7 @@ import {
   Zap
 } from "lucide-react";
 import { codexLessonDocs, codexLessonGroups } from "./codexLessons";
+import { codexLessonDocsEn, codexLessonGroupsEn } from "./codexLessonsEn";
 
 const basePath = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
 
@@ -28,10 +30,122 @@ function currentRoute() {
   return normalize(pathname);
 }
 
-const navItems = [
-  { label: "Codex", path: "/codex" },
-  { label: "排版工具", path: "https://wxmd.aipickgold.com", external: true }
-];
+const localeLabels = {
+  zh: {
+    metaTitle: "AI PickGold Codex · Codex 中文学习站",
+    metaDescription:
+      "AI PickGold Codex 中文学习站：60 篇 Codex 实战教程，覆盖 AGENTS.md、Skills、MCP、插件、权限、Hooks 与 GitHub 自动化工作流。",
+    navItems: [
+      { label: "Codex", path: "/codex" },
+      { label: "排版工具", path: "https://wxmd.aipickgold.com", external: true }
+    ],
+    headerAction: "学习仓库",
+    languageLabel: "语言",
+    heroBadge: "AI PickGold Codex 学习站",
+    heroTitleLead: "Codex",
+    heroTitle: "从入门到精通",
+    heroText:
+      "面向中文开发者的 Codex 完整教程。以桌面端 App 为主线，覆盖 CLI、IDE、Web / Cloud、AGENTS.md、Skills、MCP、插件、权限、Hooks、GitHub 自动化和真实项目工作流。",
+    startLearning: "开始学习",
+    browseCatalog: "浏览目录",
+    metrics: [
+      ["60", "篇教程"],
+      ["12", "部分"],
+      ["App", "主线"],
+      ["CLI / Web", "补充"]
+    ],
+    deckToday: "today",
+    deckTitle: "把一个项目交给 Codex 前，先建立上下文和边界。",
+    deckLines: ["扫描项目结构、命令和风险", "写入 AGENTS.md 与公开内容门禁", "交付功能、测试、review 和上线检查"],
+    deckFooter: ["读上下文", "做小任务", "验收结果"],
+    why: {
+      label: "Why Codex",
+      title: "为什么选 Codex",
+      text: "OpenAI 出品的 coding agent，桌面端、CLI、IDE、Cloud 一套到底；教程站要讲到能上手。"
+    },
+    curriculum: {
+      label: "Full curriculum",
+      title: "60 篇 Codex 教学文档",
+      text: "公开站点只展示教程内容。每篇都包含实战情景、可复制提示词、操作步骤和验收清单。"
+    },
+    learning: {
+      label: "Learning path",
+      title: "30 分钟上手路线",
+      text: "完整教程有 60 篇，但新手可以先按这条最短路径跑通一个真实项目。"
+    },
+    community: {
+      label: "Study together",
+      title: "跟着我学 Codex",
+      text: "课程更新、实战复盘和学习交流都会放在这三个入口里。"
+    },
+    repo: {
+      label: "Repository radar",
+      title: "公开来源雷达",
+      text: "公开页面只展示官方事实源和 AI PickGold 自有教程仓库。",
+      columns: ["Repository", "Use", "Signal"]
+    },
+    tutorialSidebar: "完整目录",
+    backToCatalog: "返回目录",
+    officialDocs: "官方文档"
+  },
+  en: {
+    metaTitle: "AI PickGold Codex · Practical Codex Learning Hub",
+    metaDescription:
+      "AI PickGold Codex is a practical 60-lesson Codex learning hub covering AGENTS.md, Skills, MCP, plugins, permissions, Hooks, and GitHub automation.",
+    navItems: [
+      { label: "Codex", path: "/codex" },
+      { label: "Formatting Tool", path: "https://wxmd.aipickgold.com", external: true }
+    ],
+    headerAction: "Course Repo",
+    languageLabel: "Language",
+    heroBadge: "AI PickGold Codex Learning Hub",
+    heroTitleLead: "Codex",
+    heroTitle: "from beginner to operator",
+    heroText:
+      "A practical Codex learning hub for developers and builders. Start with the desktop app, then learn CLI, IDE, Web / Cloud, AGENTS.md, Skills, MCP, plugins, permissions, Hooks, GitHub automation, and real project workflows.",
+    startLearning: "Start learning",
+    browseCatalog: "Browse catalog",
+    metrics: [
+      ["60", "lessons"],
+      ["12", "parts"],
+      ["App", "main track"],
+      ["CLI / Web", "extras"]
+    ],
+    deckToday: "today",
+    deckTitle: "Before handing a project to Codex, define context and boundaries.",
+    deckLines: ["Scan structure, commands, and risk", "Write AGENTS.md and public-content rules", "Ship changes, tests, review, and release checks"],
+    deckFooter: ["Read context", "Do small tasks", "Verify results"],
+    why: {
+      label: "Why Codex",
+      title: "Why Learn Codex",
+      text: "Codex is OpenAI's coding agent surface across desktop, CLI, IDE, and Cloud. This course focuses on usable workflows, not abstract concepts."
+    },
+    curriculum: {
+      label: "Full curriculum",
+      title: "60 Practical Codex Lessons",
+      text: "Each lesson includes a scenario, a copy-ready prompt, operating steps, and an acceptance checklist."
+    },
+    learning: {
+      label: "Learning path",
+      title: "A 30-minute starter path",
+      text: "There are 60 lessons in the full course, but this path gets a new user through one real project loop first."
+    },
+    community: {
+      label: "Study together",
+      title: "Learn Codex with me",
+      text: "Follow the updates, practice notes, and learning discussions through these three entry points."
+    },
+    repo: {
+      label: "Repository radar",
+      title: "Public Source Radar",
+      text: "The public page only displays official sources and the AI PickGold tutorial repository.",
+      columns: ["Repository", "Use", "Signal"]
+    },
+    tutorialSidebar: "Full catalog",
+    backToCatalog: "Back to catalog",
+    officialDocs: "Official docs"
+  }
+};
 
 const learningSteps = [
   {
@@ -162,14 +276,6 @@ const codexFeatures = [
   }
 ];
 
-const publicTutorialParts = codexLessonGroups.map((group, groupIndex) => ({
-  number: `第 ${groupIndex + 1} 部分`,
-  title: group.group,
-  slug: `${String(group.lessons[0].number).padStart(2, "0")}-${group.lessons[0].slug}`,
-  focus: `${group.lessons.length} 篇教程`,
-  lessons: group.lessons.map((lesson) => lesson.title)
-}));
-
 const communityCards = [
   {
     title: "小红书",
@@ -197,50 +303,337 @@ const communityCards = [
   }
 ];
 
-export default function App() {
-  const route = currentRoute();
-
-  if (route.startsWith("/tutorial")) {
-    return <CodexTutorialDetail />;
+const englishLearningSteps = [
+  {
+    title: "Install and sign in",
+    time: "04 min",
+    summary: "Confirm the App, CLI, and IDE entry points, then run a tiny practice project.",
+    output: "First read-only scan command"
+  },
+  {
+    title: "Project context",
+    time: "05 min",
+    summary: "Write repository goals, directories, test commands, and boundaries in a way Codex can use.",
+    output: "Project takeover checklist"
+  },
+  {
+    title: "AGENTS.md",
+    time: "06 min",
+    summary: "Use repository instructions to lock style, tests, permissions, and delivery format.",
+    output: "Copy-ready AGENTS.md skeleton"
+  },
+  {
+    title: "Real tasks",
+    time: "06 min",
+    summary: "Let Codex read code, build features, fix bugs, add tests, and review pull requests.",
+    output: "Reviewable diff"
+  },
+  {
+    title: "GitHub / CI",
+    time: "05 min",
+    summary: "Connect issues, PR review, CI fixes, and release checks to a real repository.",
+    output: "Issue-to-PR template"
+  },
+  {
+    title: "Safety and governance",
+    time: "04 min",
+    summary: "Keep secrets, accounts, production releases, and high-risk commands behind approval.",
+    output: "Pre-release checklist"
   }
+];
 
-  return <CodexLearningHome />;
+const englishFeatures = [
+  {
+    icon: AppWindow,
+    symbol: "app.window",
+    title: "Desktop-first",
+    text: "Use the Codex App to manage projects, threads, local previews, plugins, and cloud tasks."
+  },
+  {
+    icon: Brain,
+    symbol: "brain",
+    title: "Real execution",
+    text: "Codex reads files, edits code, runs commands, and returns reviewable diffs."
+  },
+  {
+    icon: Cable,
+    symbol: "cable.connector",
+    title: "MCP and plugins",
+    text: "Connect browsers, GitHub, Linear, Figma, docs, and internal tools with permission boundaries."
+  },
+  {
+    icon: Zap,
+    symbol: "bolt",
+    title: "Skills",
+    text: "Turn repeatable workflows into reusable skills that Codex can call later."
+  },
+  {
+    icon: ShieldCheck,
+    symbol: "checkmark.shield",
+    title: "Controlled permissions",
+    text: "Use sandboxing, approval, rules, hooks, and human checkpoints to control risk."
+  },
+  {
+    icon: Cloud,
+    symbol: "icloud",
+    title: "Automation-ready",
+    text: "Use codex exec, GitHub Actions, SDK boundaries, and cloud tasks for repeatable workflows."
+  }
+];
+
+const englishRepoRadar = [
+  {
+    name: "soarsky1991/aipickgold-codex-tutorial",
+    url: "https://github.com/soarsky1991/aipickgold-codex-tutorial",
+    kind: "AI PickGold course repo",
+    language: "Chinese / English",
+    stars: "new",
+    license: "Apache-2.0",
+    updatedAt: "2026-06-07",
+    reuseMode: "Original course index",
+    summary: "The public AI PickGold Codex tutorial repository with a 60-lesson course map.",
+    learningUse: "Used as the content base for codex.aipickgold.com."
+  },
+  {
+    name: "openai/codex",
+    url: "https://github.com/openai/codex",
+    kind: "Official repository",
+    language: "English",
+    stars: "89.1k",
+    license: "Apache-2.0",
+    updatedAt: "2026-06-07",
+    reuseMode: "Primary source",
+    summary: "The official Codex repository for installation, authentication, configuration, sandboxing, AGENTS.md, Skills, and CLI behavior.",
+    learningUse: "Used as the first source for factual claims."
+  },
+  {
+    name: "openai/skills",
+    url: "https://github.com/openai/skills",
+    kind: "Official Skills catalog",
+    language: "English",
+    stars: "21.5k",
+    license: "Not declared",
+    updatedAt: "2026-06-07",
+    reuseMode: "Concept and link reference",
+    summary: "The Codex Skills catalog explains skill structure, installation, and distribution.",
+    learningUse: "Used as the entry point for Skills lessons."
+  },
+  {
+    name: "openai/codex-action",
+    url: "https://github.com/openai/codex-action",
+    kind: "GitHub automation",
+    language: "English",
+    stars: "1.0k",
+    license: "Apache-2.0",
+    updatedAt: "2026-06-07",
+    reuseMode: "CI / PR reference",
+    summary: "Codex Action examples for repository checks, PR assistance, and sandbox-aware automation.",
+    learningUse: "Used for automation lessons and execution templates."
+  }
+];
+
+const englishCommunityCards = [
+  {
+    title: "Xiaohongshu",
+    label: "AI review notes",
+    image: "/community/xiaohongshu-qr.jpg",
+    imageClass: "square",
+    alt: "AI PickGold Xiaohongshu QR code",
+    text: "Follow short Codex notes, practice recaps, and AI workflow updates."
+  },
+  {
+    title: "Zhichen WeChat",
+    label: "Add WeChat",
+    image: "/community/wechat-zhichen-qr-square.jpg",
+    imageClass: "square",
+    alt: "Zhichen WeChat QR code",
+    text: "Add Zhichen on WeChat to discuss Codex learning paths and project workflows."
+  },
+  {
+    title: "Codex Study Group",
+    label: "Join the group",
+    image: "/community/codex-learning-group-qr.jpg",
+    imageClass: "square",
+    alt: "Codex study group QR code",
+    text: "Join the Codex study group for practice, questions, and review."
+  }
+];
+
+const localeOptions = [
+  { code: "zh", label: "中文" },
+  { code: "en", label: "EN" }
+];
+
+function normalizeLocale(value) {
+  return value === "en" ? "en" : "zh";
 }
 
-function CodexLearningHome() {
+function getLocaleFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const lang = params.get("lang");
+  return lang === "en" || lang === "zh" ? lang : null;
+}
+
+function guessLocaleFromBrowser() {
+  const language = `${navigator.language || ""} ${(navigator.languages || []).join(" ")}`.toLowerCase();
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+  if (language.includes("zh") || timezone === "Asia/Shanghai" || timezone === "Asia/Chongqing" || timezone === "Asia/Urumqi") {
+    return "zh";
+  }
+  return "en";
+}
+
+function localeFromCountry(countryCode) {
+  return String(countryCode || "").toUpperCase() === "CN" ? "zh" : "en";
+}
+
+async function fetchJsonWithTimeout(url, timeout = 1200) {
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), timeout);
+  try {
+    const response = await fetch(url, { signal: controller.signal, cache: "no-store" });
+    if (!response.ok) return null;
+    return await response.json();
+  } catch {
+    return null;
+  } finally {
+    window.clearTimeout(timer);
+  }
+}
+
+async function detectLocaleByIp() {
+  const localGeo = await fetchJsonWithTimeout("/api/geo", 900);
+  if (localGeo?.country || localGeo?.country_code) {
+    return localeFromCountry(localGeo.country || localGeo.country_code);
+  }
+
+  const remoteGeo = await fetchJsonWithTimeout("https://ipapi.co/json/", 1400);
+  if (remoteGeo?.country || remoteGeo?.country_code) {
+    return localeFromCountry(remoteGeo.country || remoteGeo.country_code);
+  }
+
+  return null;
+}
+
+function useLocale() {
+  const [locale, setLocaleState] = useState(() => {
+    const fromUrl = getLocaleFromUrl();
+    if (fromUrl) return fromUrl;
+    const savedManual = localStorage.getItem("aipickgold.locale.manual");
+    if (savedManual) return normalizeLocale(savedManual);
+    return guessLocaleFromBrowser();
+  });
+
+  useEffect(() => {
+    document.documentElement.lang = locale === "en" ? "en" : "zh-CN";
+  }, [locale]);
+
+  useEffect(() => {
+    const fromUrl = getLocaleFromUrl();
+    if (fromUrl) {
+      localStorage.setItem("aipickgold.locale.manual", fromUrl);
+      return;
+    }
+    if (localStorage.getItem("aipickgold.locale.manual")) return;
+
+    let active = true;
+    detectLocaleByIp().then((detected) => {
+      if (active && detected) setLocaleState(detected);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const setLocale = (nextLocale) => {
+    const normalized = normalizeLocale(nextLocale);
+    localStorage.setItem("aipickgold.locale.manual", normalized);
+    setLocaleState(normalized);
+  };
+
+  return [locale, setLocale];
+}
+
+function buildParts(groups, locale) {
+  return groups.map((group, groupIndex) => ({
+    number: locale === "en" ? `Part ${groupIndex + 1}` : `第 ${groupIndex + 1} 部分`,
+    title: group.group,
+    slug: `${String(group.lessons[0].number).padStart(2, "0")}-${group.lessons[0].slug}`,
+    focus: locale === "en" ? `${group.lessons.length} lessons` : `${group.lessons.length} 篇教程`,
+    lessons: group.lessons.map((lesson) => lesson.title)
+  }));
+}
+
+function getLocalizedContent(locale) {
+  const isEnglish = locale === "en";
+  const groups = isEnglish ? codexLessonGroupsEn : codexLessonGroups;
+  return {
+    copy: localeLabels[locale],
+    groups,
+    docs: isEnglish ? codexLessonDocsEn : codexLessonDocs,
+    learningSteps: isEnglish ? englishLearningSteps : learningSteps,
+    repoRadar: isEnglish ? englishRepoRadar : repoRadar,
+    features: isEnglish ? englishFeatures : codexFeatures,
+    communityCards: isEnglish ? englishCommunityCards : communityCards,
+    tutorialParts: buildParts(groups, locale)
+  };
+}
+
+export default function App() {
+  const route = currentRoute();
+  const [locale, setLocale] = useLocale();
+  const content = useMemo(() => getLocalizedContent(locale), [locale]);
+
+  useEffect(() => {
+    document.title = content.copy.metaTitle;
+    const description = document.querySelector('meta[name="description"]');
+    if (description) description.setAttribute("content", content.copy.metaDescription);
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute("content", content.copy.metaTitle);
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) ogDescription.setAttribute("content", content.copy.metaDescription);
+  }, [content]);
+
+  if (route.startsWith("/tutorial")) {
+    return <CodexTutorialDetail content={content} locale={locale} setLocale={setLocale} />;
+  }
+
+  return <CodexLearningHome content={content} locale={locale} setLocale={setLocale} />;
+}
+
+function CodexLearningHome({ content, locale, setLocale }) {
+  const { copy, features, tutorialParts, learningSteps: steps, repoRadar: repos, communityCards: cards } = content;
+
   return (
     <div className="codex-shell">
-      <CodexHeader />
+      <CodexHeader copy={copy} locale={locale} setLocale={setLocale} />
       <main className="codex-home" aria-label="Codex learning portal">
         <section className="codex-hero" aria-labelledby="codex-hero-title">
           <div className="codex-hero-copy">
             <div className="codex-hero-badge">
               <span />
-              AI PickGold Codex 学习站
+              {copy.heroBadge}
             </div>
             <h1 id="codex-hero-title">
-              <span>Codex</span>
-              从入门到精通
+              <span>{copy.heroTitleLead}</span>
+              {copy.heroTitle}
             </h1>
-            <p>
-              面向中文开发者的 Codex 完整教程。以桌面端 App 为主线，覆盖 CLI、IDE、Web / Cloud、
-              AGENTS.md、Skills、MCP、插件、权限、Hooks、GitHub 自动化和真实项目工作流。
-            </p>
+            <p>{copy.heroText}</p>
             <div className="codex-actions">
               <a className="primary-action" href={routePath("/tutorial/01-codex-intro.html")}>
                 <ListChecks size={16} />
-                开始学习
+                {copy.startLearning}
               </a>
               <a className="secondary-link" href="#parts">
                 <LayoutPanelLeft size={16} />
-                浏览目录
+                {copy.browseCatalog}
               </a>
             </div>
             <div className="codex-hero-stats">
-              <CodexMetric value="60" label="篇教程" />
-              <CodexMetric value="12" label="部分" />
-              <CodexMetric value="App" label="主线" />
-              <CodexMetric value="CLI / Web" label="补充" />
+              {copy.metrics.map(([value, label]) => (
+                <CodexMetric value={value} label={label} key={`${value}-${label}`} />
+              ))}
             </div>
           </div>
 
@@ -254,42 +647,42 @@ function CodexLearningHome() {
               </div>
               <div className="deck-body">
                 <div className="deck-route">
-                  <span>today</span>
-                  <strong>把一个项目交给 Codex 前，先建立上下文和边界。</strong>
+                  <span>{copy.deckToday}</span>
+                  <strong>{copy.deckTitle}</strong>
                 </div>
                 <div className="deck-line">
                   <span>01</span>
-                  <p>扫描项目结构、命令和风险</p>
+                  <p>{copy.deckLines[0]}</p>
                   <em>Read-only</em>
                 </div>
                 <div className="deck-line">
                   <span>02</span>
-                  <p>写入 AGENTS.md 与公开内容门禁</p>
+                  <p>{copy.deckLines[1]}</p>
                   <em>Context</em>
                 </div>
                 <div className="deck-line active">
                   <span>03</span>
-                  <p>交付功能、测试、review 和上线检查</p>
+                  <p>{copy.deckLines[2]}</p>
                   <em>Ship</em>
                 </div>
               </div>
             </div>
             <div className="deck-footer">
-              <span>读上下文</span>
-              <span>做小任务</span>
-              <span>验收结果</span>
+              {copy.deckFooter.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
             </div>
           </div>
         </section>
 
         <section className="codex-section codex-features">
           <SectionIntro
-            label="Why Codex"
-            title="为什么选 Codex"
-            text="OpenAI 出品的 coding agent，桌面端、CLI、IDE、Cloud 一套到底；教程站要讲到能上手。"
+            label={copy.why.label}
+            title={copy.why.title}
+            text={copy.why.text}
           />
           <div className="feature-grid">
-            {codexFeatures.map((feature) => {
+            {features.map((feature) => {
               const Icon = feature.icon;
               return (
                 <article className="codex-feature-card" key={feature.title}>
@@ -306,12 +699,12 @@ function CodexLearningHome() {
 
         <section className="codex-section tutorial-parts" id="parts">
           <SectionIntro
-            label="Full curriculum"
-            title="60 篇 Codex 教学文档"
-            text="公开站点只展示教程内容。每篇都包含实战情景、可复制提示词、操作步骤和验收清单。"
+            label={copy.curriculum.label}
+            title={copy.curriculum.title}
+            text={copy.curriculum.text}
           />
           <div className="parts-grid">
-            {publicTutorialParts.map((part) => (
+            {tutorialParts.map((part) => (
               <a className="part-card" href={routePath(`/tutorial/${part.slug}.html`)} key={part.title}>
                 <span>{part.number}</span>
                 <h2>{part.title}</h2>
@@ -328,12 +721,12 @@ function CodexLearningHome() {
 
         <section className="codex-section learning-path" id="learning-path">
           <SectionIntro
-            label="Learning path"
-            title="30 分钟上手路线"
-            text="完整教程有 60 篇，但新手可以先按这条最短路径跑通一个真实项目。"
+            label={copy.learning.label}
+            title={copy.learning.title}
+            text={copy.learning.text}
           />
           <div className="path-grid">
-            {learningSteps.map((step, index) => (
+            {steps.map((step, index) => (
               <article className="path-card" key={step.title}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <div>
@@ -349,12 +742,12 @@ function CodexLearningHome() {
 
         <section className="codex-section community-section" id="learn-with-me">
           <SectionIntro
-            label="Study together"
-            title="跟着我学 Codex"
-            text="课程更新、实战复盘和学习交流都会放在这三个入口里。"
+            label={copy.community.label}
+            title={copy.community.title}
+            text={copy.community.text}
           />
           <div className="community-grid">
-            {communityCards.map((card) => (
+            {cards.map((card) => (
               <article className="community-card" key={card.title}>
                 <div className={`community-image ${card.imageClass}`}>
                   <img src={routePath(card.image)} alt={card.alt} loading="lazy" />
@@ -371,18 +764,18 @@ function CodexLearningHome() {
 
         <section className="codex-section repo-radar" aria-labelledby="repo-radar-title">
           <SectionIntro
-            label="Repository radar"
-            title="公开来源雷达"
-            text="公开页面只展示官方事实源和 AI PickGold 自有教程仓库。"
+            label={copy.repo.label}
+            title={copy.repo.title}
+            text={copy.repo.text}
             id="repo-radar-title"
           />
           <div className="repo-table" role="table" aria-label="Codex repository radar">
             <div className="repo-table-head" role="row">
-              <span>Repository</span>
-              <span>Use</span>
-              <span>Signal</span>
+              {copy.repo.columns.map((column) => (
+                <span key={column}>{column}</span>
+              ))}
             </div>
-            {repoRadar.map((repo) => (
+            {repos.map((repo) => (
               <article className="repo-row" role="row" key={repo.name}>
                 <div>
                   <a href={repo.url}>{repo.name}</a>
@@ -408,7 +801,7 @@ function CodexLearningHome() {
   );
 }
 
-function CodexHeader({ current = "Codex" }) {
+function CodexHeader({ copy, locale, setLocale, current = "Codex" }) {
   return (
     <header className="codex-header">
       <a className="codex-brand" href={routePath("/codex")}>
@@ -418,7 +811,7 @@ function CodexHeader({ current = "Codex" }) {
         <strong>AI PickGold</strong>
       </a>
       <nav className="codex-nav" aria-label="Codex tutorial navigation">
-        {navItems.map((item) => (
+        {copy.navItems.map((item) => (
           <a
             className={item.label === current ? "active" : ""}
             href={item.external ? item.path : routePath(item.path)}
@@ -429,25 +822,40 @@ function CodexHeader({ current = "Codex" }) {
           </a>
         ))}
       </nav>
-      <a className="codex-header-action" href="https://github.com/soarsky1991/aipickgold-codex-tutorial" target="_blank" rel="noreferrer">
-        学习仓库
-      </a>
+      <div className="codex-header-tools">
+        <div className="language-switch" aria-label={copy.languageLabel}>
+          {localeOptions.map((option) => (
+            <button
+              className={option.code === locale ? "active" : ""}
+              type="button"
+              onClick={() => setLocale(option.code)}
+              key={option.code}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+        <a className="codex-header-action" href="https://github.com/soarsky1991/aipickgold-codex-tutorial" target="_blank" rel="noreferrer">
+          {copy.headerAction}
+        </a>
+      </div>
     </header>
   );
 }
 
-function CodexTutorialDetail() {
+function CodexTutorialDetail({ content, locale, setLocale }) {
+  const { copy, docs, tutorialParts } = content;
   const slug = currentRoute().split("/").pop()?.replace(".html", "") || "01-codex-intro";
-  const doc = codexLessonDocs.find((item) => item.slug === slug) || codexLessonDocs[0];
+  const doc = docs.find((item) => item.slug === slug) || docs[0];
 
   return (
     <div className="codex-shell">
-      <CodexHeader />
+      <CodexHeader copy={copy} locale={locale} setLocale={setLocale} />
       <main className="tutorial-layout" aria-label="Codex tutorial detail">
         <aside className="tutorial-sidebar" aria-label="Tutorial sections">
-          <strong>完整目录</strong>
+          <strong>{copy.tutorialSidebar}</strong>
           <nav>
-            {publicTutorialParts.map((part) => (
+            {tutorialParts.map((part) => (
               <a
                 className={part.slug === doc.slug ? "active" : ""}
                 href={routePath(`/tutorial/${part.slug}.html`)}
@@ -469,11 +877,11 @@ function CodexTutorialDetail() {
               <div className="codex-actions">
                 <a className="primary-action" href={routePath("/codex")}>
                   <LayoutPanelLeft size={16} />
-                  返回目录
+                  {copy.backToCatalog}
                 </a>
                 <a className="secondary-link" href="https://developers.openai.com/codex" target="_blank" rel="noreferrer">
                   <Globe2 size={16} />
-                  官方文档
+                  {copy.officialDocs}
                 </a>
               </div>
             </div>
