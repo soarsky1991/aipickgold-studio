@@ -143,6 +143,7 @@ const platformTabs = [
 ];
 
 const navItems = [
+  { label: "Codex Lab", path: "/codex" },
   { label: "Studio Desk", path: "/studio" },
   { label: "Founder IP", path: "/founder" },
   { label: "WxMD", path: "/wxmd" },
@@ -171,6 +172,262 @@ const md2wechatSignals = [
   "Credentialed draft APIs stay behind server-side gates.",
   "WeChat draft creation requires AppId, App Secret, API key, and IP whitelist.",
   "V1 Studio exports a manual package before direct account actions."
+];
+
+const learningSteps = [
+  {
+    title: "安装与登录",
+    time: "04 min",
+    summary: "确认 CLI、Desktop、IDE 三个入口，先跑通最小项目。",
+    output: "一条可复用的本机启动命令"
+  },
+  {
+    title: "项目上下文",
+    time: "05 min",
+    summary: "把仓库目标、目录、测试命令和边界写成 Codex 能读懂的上下文。",
+    output: "项目接管清单"
+  },
+  {
+    title: "AGENTS.md",
+    time: "06 min",
+    summary: "用仓库级指令固定风格、测试、权限和交付口径。",
+    output: "可复制的 AGENTS.md 骨架"
+  },
+  {
+    title: "Skills",
+    time: "06 min",
+    summary: "把重复工作沉淀成可安装、可审查、可迁移的 Skill。",
+    output: "第一个本地 Skill"
+  },
+  {
+    title: "GitHub / CI",
+    time: "05 min",
+    summary: "把 PR、review、CI 修复和发布检查接进真实仓库。",
+    output: "自动化任务模板"
+  },
+  {
+    title: "桌面与移动工作流",
+    time: "04 min",
+    summary: "区分 Codex Web、CLI、Desktop、手机查看和人工确认边界。",
+    output: "个人操作台路线图"
+  }
+];
+
+const repoRadar = [
+  {
+    name: "soarsky1991/aipickgold-codex-tutorial",
+    url: "https://github.com/soarsky1991/aipickgold-codex-tutorial",
+    kind: "本站学习仓库",
+    language: "中文",
+    stars: "new",
+    license: "Apache-2.0",
+    updatedAt: "2026-06-07",
+    reuseMode: "原创改写 + 来源标注",
+    summary: "AI PickGold 自己的 Codex 中文学习仓库，沉淀教程、来源雷达、站点路线图和执行清单。",
+    learningUse: "作为 codex.aipickgold.com 的公开内容底座和长期更新入口。"
+  },
+  {
+    name: "openai/codex",
+    url: "https://github.com/openai/codex",
+    kind: "官方主仓",
+    language: "English",
+    stars: "89.1k",
+    license: "Apache-2.0",
+    updatedAt: "2026-06-07",
+    reuseMode: "事实源 + 安装/配置结构",
+    summary: "Codex CLI 官方仓库，覆盖安装、认证、配置、沙盒、AGENTS.md、Skills 和命令模式。",
+    learningUse: "作为所有教程结论的第一事实源。"
+  },
+  {
+    name: "leigegehaha/codex-chinese-tutorial",
+    url: "https://github.com/leigegehaha/codex-chinese-tutorial",
+    kind: "中文教程",
+    language: "中文",
+    stars: "18",
+    license: "Apache-2.0",
+    updatedAt: "2026-06-04",
+    reuseMode: "中文结构种子，重写文案",
+    summary: "面向新手的 Codex 中文教程，覆盖 CLI、桌面端、Skills、插件和自动化工作流。",
+    learningUse: "抽取中文学习路径和章节顺序，改写为 AI PickGold 实战清单。"
+  },
+  {
+    name: "openai/skills",
+    url: "https://github.com/openai/skills",
+    kind: "官方 Skills 目录",
+    language: "English",
+    stars: "21.5k",
+    license: "未声明",
+    updatedAt: "2026-06-07",
+    reuseMode: "链接与概念引用",
+    summary: "Codex Skills Catalog，说明 Skills 的目录结构、安装方式和分发思路。",
+    learningUse: "给 Skill Center 和自定义 Skill 课程做入口。"
+  },
+  {
+    name: "openai/codex-action",
+    url: "https://github.com/openai/codex-action",
+    kind: "GitHub 自动化",
+    language: "English",
+    stars: "1.0k",
+    license: "Apache-2.0",
+    updatedAt: "2026-06-07",
+    reuseMode: "CI/PR 章节参考",
+    summary: "Codex Action 示例，适合把仓库检查、PR 辅助和沙盒保护接进 GitHub。",
+    learningUse: "作为自动化章节和执行模板来源。"
+  },
+  {
+    name: "ComposioHQ/awesome-codex-skills",
+    url: "https://github.com/ComposioHQ/awesome-codex-skills",
+    kind: "生态目录",
+    language: "English",
+    stars: "13.1k",
+    license: "未声明",
+    updatedAt: "2026-06-07",
+    reuseMode: "仅作目录参考",
+    summary: "社区 Codex Skills 资源目录，适合观察热门 Skill 分类与生态词汇。",
+    learningUse: "只做选题雷达，不直接复制代码或文案。"
+  }
+];
+
+const practicePacks = [
+  {
+    title: "Codex 新手包",
+    audience: "第一次打开 Codex 的中文用户",
+    deliverable: "安装命令、登录检查、首个修复任务、常见报错清单",
+    source: "openai/codex + 中文教程改写"
+  },
+  {
+    title: "项目接管包",
+    audience: "要让 Codex 理解老项目的人",
+    deliverable: "仓库扫描、AGENTS.md、测试命令、风险边界、交付模板",
+    source: "官方 AGENTS.md 文档 + AI PickGold 工作台经验"
+  },
+  {
+    title: "GitHub 自动化包",
+    audience: "想把 PR、CI、review 交给 Codex 辅助的人",
+    deliverable: "Action 示例、PR 检查口径、失败日志分流、人工合并门禁",
+    source: "openai/codex-action"
+  },
+  {
+    title: "AI PickGold 内容生产包",
+    audience: "用 Codex 写教程、做卡片、发公众号的创作者",
+    deliverable: "Markdown 主稿、XHS 卡片、X 线程、视频脚本、手动发布包",
+    source: "Studio Desk + WxMD/CardMD"
+  }
+];
+
+const viralBreakdown = [
+  { label: "TL;DR", text: "把长教程压缩成一个可执行路线，而不是只做阅读摘要。" },
+  { label: "目录", text: "基础设置、连接构建、自动化、实战包四段式推进。" },
+  { label: "热度指标", text: "保留曝光、收藏、转发这类判断维度，但用作选题优先级。" },
+  { label: "二次创作", text: "每篇爆款都转成清单、仓库链接、练习任务和发布包。" }
+];
+
+const tutorialParts = [
+  {
+    number: "第 1 部分",
+    title: "基础入门",
+    focus: "Codex 是什么、使用形态、工具对比、第一条任务",
+    lessons: ["Codex 是什么", "四种入口", "适合与不适合", "账号认证"]
+  },
+  {
+    number: "第 2 部分",
+    title: "桌面端入门",
+    focus: "Codex App、Local / Worktree / Cloud、多线程与命令菜单",
+    lessons: ["安装登录", "界面总览", "多线程并行", "快捷命令"]
+  },
+  {
+    number: "第 3 部分",
+    title: "工程工作流",
+    focus: "Git diff、Worktree、本地 Web 预览、Chrome 与 Computer Use",
+    lessons: ["分支与 PR", "隔离开发", "浏览器预览", "桌面操作"]
+  },
+  {
+    number: "第 4 部分",
+    title: "CLI 与终端",
+    focus: "安装、Flags、Slash Commands、会话管理、codex exec",
+    lessons: ["CLI 安装", "基础命令", "全局参数", "自动化执行"]
+  },
+  {
+    number: "第 5 部分",
+    title: "IDE 与 Cloud",
+    focus: "IDE 扩展、Codex Web、云端任务和 GitHub 集成",
+    lessons: ["IDE 工作流", "Cloud 入门", "云端任务", "Issue 到 PR"]
+  },
+  {
+    number: "第 6 部分",
+    title: "核心概念",
+    focus: "Agent Loop、Thread Context、Sandbox、Approval、模型推理",
+    lessons: ["执行循环", "上下文", "权限边界", "推理强度"]
+  },
+  {
+    number: "第 7 部分",
+    title: "配置与定制",
+    focus: "config.toml、Permissions Profile、Rules、Hooks",
+    lessons: ["配置文件", "权限档案", "命令规则", "生命周期脚本"]
+  },
+  {
+    number: "第 8 部分",
+    title: "扩展能力",
+    focus: "AGENTS.md、Skills、MCP、插件中文速查",
+    lessons: ["AGENTS.md", "Skills", "MCP", "插件管理"]
+  },
+  {
+    number: "第 9 部分",
+    title: "实战工作流",
+    focus: "读代码、做功能、修 Bug、补测试、代码审查、前端 UI",
+    lessons: ["接管代码库", "实现功能", "修复回归", "前端 QA"]
+  },
+  {
+    number: "第 10 部分",
+    title: "集成与自动化",
+    focus: "Slack / Linear、CI/CD、GitHub Action、SDK 与 App Server",
+    lessons: ["Linear 集成", "CI 自动化", "SDK", "内部平台"]
+  },
+  {
+    number: "第 11 部分",
+    title: "安全与治理",
+    focus: "个人安全清单、企业治理、权限和审计边界",
+    lessons: ["密钥边界", "审批策略", "团队规则", "上线检查"]
+  },
+  {
+    number: "第 12 部分",
+    title: "速查与附录",
+    focus: "CLI 速查、Slash 速查、FAQ、术语表",
+    lessons: ["CLI 速查", "Slash 命令", "FAQ", "术语表"]
+  }
+];
+
+const codexFeatures = [
+  {
+    icon: "🖥️",
+    title: "桌面端主线",
+    text: "用 Codex App 管多项目、多线程、本地预览、插件和云端任务。"
+  },
+  {
+    icon: "🧠",
+    title: "真正执行",
+    text: "不是只聊天，而是读文件、改代码、运行命令、给出可审查 diff。"
+  },
+  {
+    icon: "🔌",
+    title: "MCP 与插件",
+    text: "把浏览器、GitHub、Linear、Figma、文档和内部工具接进工作流。"
+  },
+  {
+    icon: "⚡",
+    title: "Skills 固化",
+    text: "把重复工作流做成 Skill，让教程不止能看，还能被 Codex 调用。"
+  },
+  {
+    icon: "🛡️",
+    title: "权限可控",
+    text: "用 Sandbox、Approval、Rules、Hooks 和人工确认守住风险边界。"
+  },
+  {
+    icon: "☁️",
+    title: "可自动化",
+    text: "用 codex exec、GitHub Action、SDK 和云端任务做长期流程。"
+  }
 ];
 
 function getTitle(markdown) {
@@ -321,11 +578,356 @@ function statusLabel(status) {
 function App() {
   const route = currentRoute();
 
+  if (route === "/" || route === "/codex") {
+    return <CodexLearningHome />;
+  }
+
+  if (route.startsWith("/tutorial")) {
+    return <CodexTutorialDetail />;
+  }
+
   if (route === "/founder" || route === "/about") {
     return <FounderPage />;
   }
 
   return <StudioApp />;
+}
+
+function CodexLearningHome() {
+  return (
+    <div className="codex-shell">
+      <CodexHeader />
+      <main className="codex-home" aria-label="Codex learning portal">
+        <section className="codex-hero" aria-labelledby="codex-hero-title">
+          <div className="codex-hero-copy">
+            <div className="codex-hero-badge">
+              <span />
+              AI PickGold Codex 学习站
+            </div>
+            <h1 id="codex-hero-title">
+              <span>Codex</span>
+              从入门到精通
+            </h1>
+            <p>
+              面向中文开发者的 Codex 完整教程。以桌面端 App 为主线，覆盖 CLI、IDE、Web / Cloud、
+              AGENTS.md、Skills、MCP、插件、权限、Hooks、GitHub 自动化和 AI PickGold 内容发布包。
+            </p>
+            <div className="codex-actions">
+              <a className="primary-action" href={routePath("/tutorial/1-codex-intro.html")}>
+                <ListChecks size={16} />
+                开始学习
+              </a>
+              <a className="secondary-link" href="#parts">
+                <LayoutPanelLeft size={16} />
+                浏览目录
+              </a>
+            </div>
+            <div className="codex-hero-stats">
+              <CodexMetric value="60" label="小节" />
+              <CodexMetric value="12" label="大部分" />
+              <CodexMetric value="App" label="主线" />
+              <CodexMetric value="CLI / Web" label="补充" />
+            </div>
+          </div>
+
+          <div className="codex-hero-board" aria-label="Codex source board">
+            <div className="board-title">
+              <span>source standard</span>
+              <strong>公开来源校验，改写成 AI PickGold 版本</strong>
+            </div>
+            <div className="source-stack">
+              {repoRadar.slice(0, 3).map((repo) => (
+                <a className="source-row" href={repo.url} key={repo.name}>
+                  <span>{repo.kind}</span>
+                  <strong>{repo.name}</strong>
+                  <em>{repo.license}</em>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="codex-section codex-features">
+          <SectionIntro
+            label="Why Codex"
+            title="为什么选 Codex"
+            text="OpenAI 出品的 coding agent，桌面端、CLI、IDE、Cloud 一套到底；教程站要讲到能上手。"
+          />
+          <div className="feature-grid">
+            {codexFeatures.map((feature) => (
+              <article className="codex-feature-card" key={feature.title}>
+                <span>{feature.icon}</span>
+                <h2>{feature.title}</h2>
+                <p>{feature.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="codex-section tutorial-parts" id="parts">
+          <SectionIntro
+            label="Full curriculum"
+            title="完整目录"
+            text="按系统化教程站的深度设计课程；先做首页目录，后续可生成每个章节页。"
+          />
+          <div className="parts-grid">
+            {tutorialParts.map((part) => (
+              <article className="part-card" key={part.title}>
+                <span>{part.number}</span>
+                <h2>{part.title}</h2>
+                <p>{part.focus}</p>
+                <ul>
+                  {part.lessons.map((lesson) => (
+                    <li key={lesson}>{lesson}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="codex-section learning-path" id="learning-path">
+          <SectionIntro
+            label="Learning path"
+            title="30 分钟上手路线"
+            text="保留完整教程站的目录深度，但首页先给新手一条最短可执行路径。"
+          />
+          <div className="path-grid">
+            {learningSteps.map((step, index) => (
+              <article className="path-card" key={step.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h2>{step.title}</h2>
+                  <p>{step.summary}</p>
+                  <strong>{step.output}</strong>
+                </div>
+                <em>{step.time}</em>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="codex-section repo-radar" aria-labelledby="repo-radar-title">
+          <SectionIntro
+            label="Repository radar"
+            title="公开来源雷达"
+            text="所有公开来源都标注许可、用途和复用边界；许可不明确的内容不进入公开素材。"
+            id="repo-radar-title"
+          />
+          <div className="repo-table" role="table" aria-label="Codex repository radar">
+            <div className="repo-table-head" role="row">
+              <span>Repository</span>
+              <span>Use</span>
+              <span>Signal</span>
+            </div>
+            {repoRadar.map((repo) => (
+              <article className="repo-row" role="row" key={repo.name}>
+                <div>
+                  <a href={repo.url}>{repo.name}</a>
+                  <p>{repo.summary}</p>
+                </div>
+                <div>
+                  <span>{repo.kind}</span>
+                  <strong>{repo.reuseMode}</strong>
+                  <p>{repo.learningUse}</p>
+                </div>
+                <div className="repo-signal">
+                  <span>{repo.language}</span>
+                  <span>{repo.stars} stars</span>
+                  <span>{repo.license}</span>
+                  <span>{repo.updatedAt}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="codex-section viral-system">
+          <SectionIntro
+            label="Content workflow"
+            title="把教程变成 AI PickGold 的实战拆解"
+            text="这里呈现的是本站自己的学习组织方式：摘要、目录、行动清单和二次创作入口。"
+          />
+          <div className="viral-grid">
+            {viralBreakdown.map((item) => (
+              <article className="viral-card" key={item.label}>
+                <span>{item.label}</span>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="codex-section practice-packs">
+          <SectionIntro
+            label="Practice packs"
+            title="把学习站接回 AI PickGold 的产品能力"
+            text="用户不是只读教程，而是拿走可运行的模板、发布包和工作流。"
+          />
+          <div className="pack-grid">
+            {practicePacks.map((pack) => (
+              <article className="pack-card" key={pack.title}>
+                <div className="pack-icon">
+                  <PackageCheck size={18} />
+                </div>
+                <h2>{pack.title}</h2>
+                <p>{pack.audience}</p>
+                <strong>{pack.deliverable}</strong>
+                <span>{pack.source}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+function CodexHeader() {
+  return (
+    <header className="codex-header">
+      <a className="codex-brand" href={routePath("/codex")}>
+        <span>Cx</span>
+        <strong>Codex 深度教程</strong>
+      </a>
+      <nav className="codex-nav" aria-label="Codex tutorial navigation">
+        <a className="active" href={routePath("/codex")}>首页</a>
+        <a href={routePath("/tutorial/1-codex-intro.html")}>教程</a>
+        <a href="https://developers.openai.com/codex" target="_blank" rel="noreferrer">官方文档</a>
+        <a href="https://github.com/soarsky1991/aipickgold-codex-tutorial" target="_blank" rel="noreferrer">学习仓库</a>
+        <a href={routePath("/studio")}>Studio Desk</a>
+      </nav>
+      <a className="codex-header-action" href="https://github.com/soarsky1991/aipickgold-codex-tutorial" target="_blank" rel="noreferrer">
+        GitHub
+      </a>
+    </header>
+  );
+}
+
+function CodexTutorialDetail() {
+  return (
+    <div className="codex-shell">
+      <CodexHeader />
+      <main className="tutorial-layout" aria-label="Codex tutorial detail">
+        <aside className="tutorial-sidebar" aria-label="Tutorial sections">
+          <strong>完整目录</strong>
+          <nav>
+            {tutorialParts.map((part) => (
+              <a href={part.number === "第 1 部分" ? routePath("/tutorial/1-codex-intro.html") : "#parts"} key={part.title}>
+                <span>{part.number}</span>
+                {part.title}
+              </a>
+            ))}
+          </nav>
+        </aside>
+
+        <article className="tutorial-article">
+          <section className="tutorial-doc-hero">
+            <div>
+              <span>从这里开始</span>
+              <h1>Codex 是什么</h1>
+              <p>
+                Codex 是 OpenAI 面向软件开发的 coding agent。它会读取文件、执行命令、修改代码，
+                并通过多轮工具调用完成真实任务。本教程把桌面端 App 作为主线，把 CLI、IDE、Cloud 作为补充。
+              </p>
+              <div className="codex-actions">
+                <a className="primary-action" href={routePath("/codex")}>
+                  <LayoutPanelLeft size={16} />
+                  返回目录
+                </a>
+                <a className="secondary-link" href="https://developers.openai.com/codex" target="_blank" rel="noreferrer">
+                  <Globe2 size={16} />
+                  官方文档
+                </a>
+              </div>
+            </div>
+            <div className="tutorial-map" aria-label="Codex workflow map">
+              <div className="map-bar">
+                <span />
+                <span />
+                <span />
+              </div>
+              <div className="map-body">
+                <div className="map-rail">
+                  <span className="active" />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="map-content">
+                  <div className="thread-chip-row">
+                    <span>Local</span>
+                    <span>Worktree</span>
+                    <span>Cloud</span>
+                  </div>
+                  <div className="map-line" />
+                  <div className="map-line short" />
+                  <div className="diff-preview">
+                    <p><strong>+</strong> readProjectContext()</p>
+                    <p><strong>+</strong> editFilesWithApproval()</p>
+                    <p><strong>+</strong> runVerification()</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="tutorial-doc-section">
+            <h2>Codex 不是什么</h2>
+            <div className="tutorial-info-grid">
+              <InfoCard title="不是补全工具" text="它不只在光标处给建议，而是会拆解任务、执行命令、检查结果。" />
+              <InfoCard title="不是纯聊天机器人" text="它会真实读写文件、调用工具和浏览器，而不是只输出文字。" />
+              <InfoCard title="不是无人值守替代品" text="所有高风险动作仍需要权限、审批、测试和人工判断。" />
+            </div>
+          </section>
+
+          <section className="tutorial-doc-section">
+            <h2>最适合先学的 4 件事</h2>
+            <ol>
+              <li>用桌面端 App 创建一个项目，并让 Codex 只读扫描目录。</li>
+              <li>写一份 AGENTS.md，告诉 Codex 如何运行测试和交付结果。</li>
+              <li>让 Codex 完成一个小改动，并检查 diff 与命令输出。</li>
+              <li>把一次重复工作沉淀成 Skill 或发布包模板。</li>
+            </ol>
+          </section>
+
+          <section className="tutorial-doc-section">
+            <h2>第一条安全提示词</h2>
+            <pre>{`请先只读检查这个项目，告诉我技术栈、目录结构、启动方式、测试命令和风险点。
+不要修改文件。最后建议一个可以安全完成的小任务，等我确认后再执行。`}</pre>
+          </section>
+        </article>
+      </main>
+    </div>
+  );
+}
+
+function InfoCard({ title, text }) {
+  return (
+    <div className="tutorial-info-card">
+      <h3>{title}</h3>
+      <p>{text}</p>
+    </div>
+  );
+}
+
+function CodexMetric({ value, label }) {
+  return (
+    <div className="codex-metric">
+      <strong>{value}</strong>
+      <span>{label}</span>
+    </div>
+  );
+}
+
+function SectionIntro({ label, title, text, id }) {
+  return (
+    <div className="codex-section-intro">
+      <span>{label}</span>
+      <h2 id={id}>{title}</h2>
+      <p>{text}</p>
+    </div>
+  );
 }
 
 function StudioApp() {
